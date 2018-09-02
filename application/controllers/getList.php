@@ -6,9 +6,9 @@ class getList extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('restaurante');
+		$this->load->model('restaurante'); //
 	}
-	
+
 	public function index()
 	{
 		$this->load->view('welcome_message');
@@ -22,3 +22,4 @@ class getList extends CI_Controller {
 		echo json_encode($data);
 	}
 }
+?>

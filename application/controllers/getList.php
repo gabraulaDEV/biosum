@@ -6,7 +6,7 @@ class getList extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('restaurante'); //
+		$this->load->model('restaurante');
 	}
 
 	public function index()
@@ -18,7 +18,7 @@ class getList extends CI_Controller {
 	{
 		$data = $this->restaurante->darListadoRestaurantes();
 		header('Content-Type: application/json');
-		echo "this a simple value: ".$name;
+		echo "this a simple value: hola esto nadie lo ve ".$name;
 		echo json_encode($data);
 	}
 }

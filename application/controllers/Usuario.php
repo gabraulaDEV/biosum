@@ -19,9 +19,7 @@ class Usuario extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index()
-	{	
-		$this->load->model("usuarioDAO");
-		
+	{			
 		$this->load->view('template/header');
 		$this->load->view('content/home');
 		$this->load->view('template/footer');

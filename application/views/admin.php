@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <title>Administración</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href=<?php echo base_url()."assets/images/icon.ico"; ?> />
   <link rel="stylesheet" href= <?php echo base_url()."assets/css/admin.css"; ?> />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <script type="text/javascript">  
@@ -52,9 +53,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- MAIN -->
-<div class="content">
+<div class="main">
   <div id="c1">
-      sdfsdfd
+      1111111111111111111111111111111
   </div>
   
 </div>

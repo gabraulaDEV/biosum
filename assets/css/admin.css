@@ -62,12 +62,11 @@ body {
 /* Change color on hover */
 .sidenav a:hover {
     background-color: #ddd;
-    color: black;
 }
 
 /* Style the content */
-.content {
-    margin-left: 200px;
+.main {
+    margin-left: 0px;
     padding-left: 20px;
     scroll-behavior: auto;
 }

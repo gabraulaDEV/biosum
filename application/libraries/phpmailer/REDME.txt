@@ -1,0 +1,20 @@
+*******************************************
+* PHPMAiler configurado para este proyecto
+*******************************************
+
+Hacer uso de la librería:
+
+	1. 	En el controlador que se necesite, se carga la librería con:
+
+		$this->load->library("phpmailer/mailer");
+
+	2.	Se envía un mensaje desde biosuministros.info con el método
+		sendSimpleMail($destinatario,$asunto,$cuerpoHTML):
+
+		$success=$this->mailer->sendSimpleMail("danieldmc123@hotmail.com","Asunto","<h1>Cuerpo HTML</h1><br/>Probando tíldes $%&/(# símbolos<br/>Listo perritoooo<h1>Ya le hago push</h1>");
+
+
+Agregrar nuevos métodos:
+
+	Dentro de application/libraries/phpmailer se encuentra la clase Mailer, la cual se
+	puede configurar agregando nuevos métodos si se desea.

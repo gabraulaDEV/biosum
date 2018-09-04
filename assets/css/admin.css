@@ -20,10 +20,26 @@ body {
     top: 0;
 }
 
+.header_title{
+    font-size: 20px;
+    float: left;
+}
+
 .icon_logo_header{
 	width: 100px;
 	float: left;
 	margin-right: 20px;
+}
+
+.menu_button{
+    float: left;
+    margin-right: 20px;
+    text-decoration: none;
+    color: white;
+}
+
+.menu_button_image{
+    width: 25px;
 }
 
 @keyframes animSideNav{
@@ -72,15 +88,9 @@ body {
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media (max-width: 800px) {
-            .sidenav {
-                height: 100%;
-                width: 50px;
-                position: fixed;
-                z-index: 1;
-                left: 0;
-                background-color: #49BF4C;
-                overflow-x: hidden;
-        }
+@media (max-width: 600px) {
+    .header_title{
+        visibility: hidden;
+        display: none;
     }
 }

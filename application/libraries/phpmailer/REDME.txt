@@ -9,9 +9,9 @@ Hacer uso de la librería:
 		$this->load->library("phpmailer/mailer");
 
 	2.	Se envía un mensaje desde biosuministros.info con el método
-		sendSimpleMail($destinatario,$asunto,$cuerpoHTML):
+		sendSimpleMail($pass,$destinatario,$asunto,$cuerpoHTML):
 
-		$success=$this->mailer->sendSimpleMail("danieldmc123@hotmail.com","Asunto","<h1>Cuerpo HTML</h1><br/>Probando tíldes $%&/(# símbolos<br/>Listo perritoooo<h1>Ya le hago push</h1>");
+		$success=$this->mailer->sendSimpleMail("PASSWORD",danieldmc123@hotmail.com","Asunto","<h1>Cuerpo HTML</h1><br/>Probando tíldes $%&/(# símbolos<br/>Listo perritoooo<h1>Ya le hago push</h1>");
 
 
 Agregrar nuevos métodos:

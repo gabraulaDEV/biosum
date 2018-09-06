@@ -12,7 +12,7 @@ class Mailer
 		
 	}
 
-	public function sendSimpleMail($destinatario,$asunto,$cuerpo)
+	public function sendSimpleMail($pass,$destinatario,$asunto,$cuerpo)
 	{
 		try {
 		    $mail =new PHPMailer\PHPMailer\PHPMailer();
@@ -23,7 +23,7 @@ class Mailer
 		    $mail->Host = 'smtp.gmail.com';                       // Specify main and backup SMTP servers, in this case GMAIL
 		    $mail->SMTPAuth = true;                               // Enable SMTP authentication
 		    $mail->Username = 'biosuministros.info@gmail.com';                 // SMTP username
-		    $mail->Password = 'BiosumInfo14321432';                           // SMTP password
+		    $mail->Password = $pass;                           // SMTP password
 		    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 		    $mail->Port = 587;                                    // TCP port to connect to
 

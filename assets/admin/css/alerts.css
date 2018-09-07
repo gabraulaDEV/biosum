@@ -1,0 +1,42 @@
+@keyframes aparecer{
+  0% {margin-top: -4%;}
+  50% {margin-top: -4%;}
+
+  50% {margin-top: 0%;}
+  100% {margin-top: 0% ;}  
+}
+
+.alert_info, .alert_correct, .alert_warn, .alert_error{
+    border: 1px solid;
+    margin: 10px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+    text-align:left;
+    width:auto;
+    animation:aparecer 3s;
+    animation-iteration-count: 1;
+}
+
+.alert_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    /*background-image: url('imagenes/info.jpg');*/
+}
+.alert_correct {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    /*background-image:url('imagenes/correcto.JPG');*/
+}
+.alert_warn {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    /*background-image: url('imagenes/ojo.JPG');*/
+}
+.alert_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    /*background-image: url('imagenes/error.jpg');*/
+}

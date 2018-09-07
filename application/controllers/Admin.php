@@ -5,36 +5,118 @@ class Admin extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('content/admin/login');
+		$this->load->view('admin/content/login');
 	}
 
 	public function login()
 	{
-		/*TODO VALIDAR SESION CON CONSULTA EN DB*/
-		$success=true;
-		if(!$success)
+		if($this->input->post('itUser')==null || $this->input->post('itPass')==null)
 		{
-			$this->load->view('content/admin/login');
+			/*Mensaje de error*/
+			$params['error']="Campos vacíos";
+			$this->load->view('admin/content/login',$params);			
 		}
 		else
 		{
-			$this->session->set_userdata(array('sessionid'=>1));
-			$this->dashboard();
-		}
+			/*TODO VALIDAR SESION CON CONSULTA EN DB*/
+			$success=true;
+			if(!$success)
+			{
+				$this->load->view('admin/content/login');
+			}
+			else
+			{
+				$this->session->set_userdata(array('sessionid'=>1));
+				$this->products();
+			}
+		}		
 	}
 
-	public function dashboard()
+	public function logout()
+	{
+		/*Vaciar sessionid*/
+		$this->session->unset_userdata('sessionid');
+		/*Redireccionar a login*/
+		$this->load->view('admin/content/login');
+	}
+
+	public function products()
 	{
 		if($this->session->userdata('sessionid')==null)
 		{
-			$this->load->view('content/admin/login');
+			$this->load->view('admin/content/login');
 		}
 		else
 		{
-			$this->load->view('template/admin/header');
-			$this->load->view('template/admin/sidenav');
-			$this->load->view('content/admin/products');
+			$params["active"]="prod";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/products');
 		}
 		
 	}
+
+	public function offers()
+	{
+		if($this->session->userdata('sessionid')==null)
+		{
+			$this->load->view('admin/content/login');
+		}
+		else
+		{
+			$params["active"]="off";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/offers');
+		}
+		
+	} 
+
+	public function sales()
+	{
+		if($this->session->userdata('sessionid')==null)
+		{
+			$this->load->view('admin/content/login');
+		}
+		else
+		{
+			$params["active"]="sales";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/sales');
+		}
+		
+	} 
+
+	public function users()
+	{
+		if($this->session->userdata('sessionid')==null)
+		{
+			$this->load->view('admin/content/login');
+		}
+		else
+		{
+			$params["active"]="users";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/users');
+		}
+		
+	} 
+
+	public function config()
+	{
+		if($this->session->userdata('sessionid')==null)
+		{
+			$this->load->view('admin/content/login');
+		}
+		else
+		{
+			$params["active"]="config";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/configs');
+		}
+		
+	} 
 }

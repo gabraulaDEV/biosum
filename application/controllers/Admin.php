@@ -119,4 +119,36 @@ class Admin extends CI_Controller {
 		}
 		
 	} 
+
+	/*
+	*
+	*
+	*
+	*
+	*
+	*
+	*PRUEBA DE IMPORT PRODUCTS
+	*/
+	public function loadImport()
+	{
+		$this->load->view('pruebas/import');
+	}
+
+	public function import()
+	{
+		$this->load->library("excelreader/excel");
+		if($_FILES['file']['type']=="application/vnd.ms-excel")
+		{
+			$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
+		}
+		else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+		{
+			$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
+		}
+		else
+		{
+			echo "No es un excel";
+		}
+		
+	}
 }

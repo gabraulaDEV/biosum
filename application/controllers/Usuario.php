@@ -24,4 +24,13 @@ class Usuario extends CI_Controller {
 		$this->load->view('content/home');
 		$this->load->view('template/footer');
 	}
+
+	/**
+	* Registro de usuarios sólo con fin de prueba
+	*/
+	public function registrarPrueba()
+	{
+		$this->load->model('UsuarioDAO');
+		$this->UsuarioDAO->insertUser("Administrador", "Contenidos", "gb_shop", "admin@hotmail.com", "Activo", 1, "+57 301545485","NA");
+	}
 }

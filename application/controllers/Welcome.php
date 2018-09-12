@@ -7,13 +7,4 @@ class getList extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
-
-	public function restaurantes($name)
-	{
-		$this->load->model('restaurante');
-		$data = $this->restaurante->darListadoRestaurantes();
-		header('Content-Type: application/json');
-		echo "this a simple value: ".$name;
-		echo json_encode($data);
-	}
 }

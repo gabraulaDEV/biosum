@@ -11,24 +11,62 @@ class UsuarioDAO extends CI_Model{
 
 	function selectUser($email, $pwd)
 	{
-		$resultSet = $this->db->query("SELECT * from  usuario where email_usuario = ? and pass_usuario = ?", array($email, $pwd));
+		$resultSet = $this->db->query("SELECT * from  gb_usuario where email_usuario = ? and pass_usuario = ?", array($email, $pwd));
 		return $resultSet->result_array();
 	}
 
-	function insertUser($cod_t_usuario, $nom_usuario, $email_usuario, $pass_usuario, $dir_usuario, $tel_usuario, $est_usuario)
+	function selectAdmin($email, $pwd)
+	{
+		$resultSet = null;
+	  	$query = $this->db->query("SELECT id, rango from  gb_usuario where usuario_email = ? and usuario_password = ?", array($email, md5($pwd)));
+	  	if($query->row() != null)
+	  	{
+	  		$row = $query->row();
+	  		if((int)$row->rango > 0)
+	  		{
+ 				$resultSet = $row->id;
+	  		} 
+	  	}
+
+	  	return $resultSet;
+	}
+
+	function getById($id)
+	{
+		$resultSet = NULL;
+		$query = $this->db->query("SELECT * from gb_usuario where id = ?", array((int)$id));
+		if($query->row() != null)
+	  	{
+	  		//Valores a mostrar por cada usuario /restringidos/
+	  		$resultSet = array(
+				"gb_nombre" => $query->row()->usuario_nombre,
+				"gb_apellido" => $query->row()->usuario_apellido,
+				"gb_email" => $query->row()->usuario_email,
+				"gb_estado" => $query->row()->estado,
+				"gb_rango" => $query->row()->rango,
+				"gb_usuario_telefono" =>  $query->row()->usuario_telefono,
+				"gb_direccion" => $query->row()->direccion
+			);
+	  	}
+
+	  	return $resultSet;
+	}
+
+	function insertUser($usuario_nombre, $usuario_apellido, $usuario_password, $usuario_email, $estado, $rango, $usuario_telefono,$direccion)
 	{
 		try{
 			$tempArrayUser = array(
-				"cod_t_usuario" => $cod_t_usuario,
-				"nom_usuario" => $nom_usuario,
-				"email_usuario" => $email_usuario,
-				"pass_usuario" => $pass_usuario,
-				"dir_usuario" => $dir_usuario,
-				"tel_usuario" => $tel_usuario,
-				"est_usuario" => $est_usuario
+				"usuario_nombre" => $usuario_nombre,
+				"usuario_apellido" => $usuario_apellido,
+				"usuario_password" => md5($usuario_password),
+				"usuario_email" => $usuario_email,
+				"estado" => $estado,
+				"rango" => $rango,
+				"usuario_telefono" => $usuario_telefono,
+				"direccion" => $direccion
 			);
 
-			$this->db->insert("usuario",$tempArrayUser);
+			$this->db->insert("gb_usuario",$tempArrayUser);
 			return true;
 		}catch(Exception $e){
 			return false;

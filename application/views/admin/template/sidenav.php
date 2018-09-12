@@ -30,6 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <nav class="templatemo-left-nav">  
 			 <!--Font awesome icons fa fa-home fa-fw at https://fontawesome.com/v4.7.0/icons/-->        
           <ul>
+            <li><a href= <?php echo base_url().index_page()."/admin/welcome "; if($active=='welcome'){echo "class='active'";}?> ><i class="fa fa-suitcase fa-fw"></i>Inicio</a></li>
             <li><a href= <?php echo base_url().index_page()."/admin/products "; if($active=='prod'){echo "class='active'";}?> ><i class="fa fa-suitcase fa-fw"></i>Productos</a></li>
 				    <li><a href=<?php echo base_url().index_page()."/admin/offers "; if($active=='off'){echo "class='active'";}?>><i class="fa fa-tags fa-fw"></i>Ofertas</a></li>
 				    <li><a href=<?php echo base_url().index_page()."/admin/sales "; if($active=='sales'){echo "class='active'";}?>><i class="fa fa-money fa-fw"></i>Ventas</a></li>

@@ -521,3 +521,8 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+/**
+|Seguridad bajo los parámetros de llave privada
+*/
+$config['private_key'] = "qwrqwr25q25q25q25h235h125"; 

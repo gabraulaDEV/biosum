@@ -7,8 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href="#">Modificar productos</a></li>
-                <li><a href="#">Agregar productos</a></li>
+                <li><a href="#">Agregar producto</a></li>
+                <li><a href=<?php echo base_url().index_page()."/admin/loadImport "; ?> >Importar Productos</a></li>
               </ul>  
             </nav> 
           </div>

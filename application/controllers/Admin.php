@@ -119,6 +119,7 @@ class Admin extends CI_Controller {
 		
 	} 
 
+<<<<<<< HEAD
 	private function isSession(){
 		$session = false;
 		if($this->session->userdata('sessionid')==null){
@@ -134,5 +135,37 @@ class Admin extends CI_Controller {
 		$this->load->model('UsuarioDAO');
 		$gb_data = $this->UsuarioDAO->getById($this->session->userdata('sessionid'));
 		return $gb_data;
+=======
+	/*
+	*
+	*
+	*
+	*
+	*
+	*
+	*PRUEBA DE IMPORT PRODUCTS
+	*/
+	public function loadImport()
+	{
+		$this->load->view('pruebas/import');
+	}
+
+	public function import()
+	{
+		$this->load->library("excelreader/excel");
+		if($_FILES['file']['type']=="application/vnd.ms-excel")
+		{
+			$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
+		}
+		else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+		{
+			$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
+		}
+		else
+		{
+			echo "No es un excel";
+		}
+		
+>>>>>>> 7c33ad0bda2d568822e0c51bf7223d0f58d46364
 	}
 }

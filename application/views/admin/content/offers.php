@@ -133,8 +133,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
     <!-- JS -->
-    <script src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
-    <script src="js/jquery-migrate-1.2.1.min.js"></script> <!--  jQuery Migrate Plugin -->
+    <script src=<?php echo base_url()."assets/admin/js/jquery-1.11.2.min.js" ?>></script>      <!-- jQuery -->
+    <script src=<?php echo base_url()."assets/admin/js/jquery-migrate-1.2.1.min.js" ?>></script> <!--  jQuery Migrate Plugin -->
     <script src="https://www.google.com/jsapi"></script> <!-- Google Chart -->
     <script>
       /* Google Chart 
@@ -172,28 +172,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           var barChart = new google.visualization.BarChart(document.getElementById('bar_chart_div'));
           barChart.draw(data, options);
       }
-
-      $(document).ready(function(){
-        if($.browser.mozilla) {
-          //refresh page on browser resize
-          // http://www.sitepoint.com/jquery-refresh-page-browser-resize/
-          $(window).bind('resize', function(e)
-          {
-            if (window.RT) clearTimeout(window.RT);
-            window.RT = setTimeout(function()
-            {
-              this.location.reload(false); /* false to get page from cache */
-            }, 200);
-          });      
-        } else {
-          $(window).resize(function(){
-            drawChart();
-          });  
-        }   
-      });
       
     </script>
-    <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+    <script type="text/javascript" src=<?php echo base_url()."assets/admin/js/admin-script.js"; ?> ></script>      <!-- Templatemo Script -->
 
   </body>
 </html>

@@ -6,7 +6,7 @@
   100% {margin-top: 0% ;}  
 }
 
-.alert_info, .alert_correct, .alert_warn, .alert_error{
+.alert_info, .alert_success, .alert_warn, .alert_error{
     border: 1px solid;
     margin: 10px 0px;
     padding:15px 10px 15px 50px;

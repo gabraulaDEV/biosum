@@ -100,12 +100,16 @@ class Admin extends CI_Controller {
 		}
 		else
 		{
+			$alert="";
 			//INSERT DE PRODUCTOOOO
 			$this->load->model('ProductoDAO');
 			//VERIFICAR QUE NO EXISTA
 			if(count($this->ProductoDAO->productoProRefTipo($this->input->post('prod_ref'),$this->input->post('prod_tipo')))>0)
 			{
-				$params["error"]="El producto ya existe";
+				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
+            	$alert=$alert."<script>";
+            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+            	$alert=$alert."</script>";
 			}
 			else
 			{
@@ -117,42 +121,37 @@ class Admin extends CI_Controller {
 					$this->input->post('prod_price'),
 					$this->input->post('prod_cat')))
 				{
-					$params["success"]="Producto agregado, error al agregar el color";
 					//INSERT COLORES
 					$this->load->model('ColorDAO');
 					if($this->ColorDAO->insertColorProducto($this->input->post('prod_ref'),$this->input->post('prod_model')
 						,$this->input->post('prod_tipo'),$this->input->post('prod_colors')))
 					{
-						$params["success"]="Producto agregado satisfactoriamete";
+						$alert=$alert."<div id='alert1' onClick='exit()' class='alert_success'><b>El producto se agregó correctamente</b></div>";
+		            	$alert=$alert."<script>";
+		            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+		            	$alert=$alert."</script>";
 					}
 					else
 					{
-						$params["error"]="Error al agregar el color";
+						$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El prodcuto se agregó, pero el color no</b></div>";
+		            	$alert=$alert."<script>";
+		            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+		            	$alert=$alert."</script>";
 					}
 
 				}
 				else
 				{
-					$params["error"]="Error al agregar el producto";
+					$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>Eror al agregar producto</b></div>";
+	            	$alert=$alert."<script>";
+	            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+	            	$alert=$alert."</script>";
 				}
 			}			
 			
 		}
-		//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO
-		$this->load->model('CategoriaDAO');
-		$categorias=$this->CategoriaDAO->nombresCategorias();
-		//COLOCAMOS LAS CATEGORIAS EN PARAMS
-		$params["categorias"]=$categorias;
-		//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO
-		$this->load->model('ColorDAO');
-		$colores=$this->ColorDAO->colores();
-		//COLOCAMOS LOS COLORES EN PARAMS
-		$params['colores']=$colores;
-		//MENU ACTIVO PRODUCTOS
-		$params["active"]="prod";
-		$this->load->view('admin/template/header');
-		$this->load->view('admin/template/sidenav',$params);
-		$this->load->view('admin/content/products');
+		$this->products();
+		echo $alert;
 	}
 
 	public function offers()

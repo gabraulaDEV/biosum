@@ -18,6 +18,7 @@
     width:auto;
     animation:aparecer 3s;
     animation-iteration-count: 1;
+    z-index: 200;
 }
 
 .alert_info {
@@ -25,7 +26,7 @@
     background-color: #BDE5F8;
     /*background-image: url('imagenes/info.jpg');*/
 }
-.alert_correct {
+.alert_success {
     color: #4F8A10;
     background-color: #DFF2BF;
     /*background-image:url('imagenes/correcto.JPG');*/

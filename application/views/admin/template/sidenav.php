@@ -2,7 +2,28 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-<body>  
+<body> 
+    <!-- ALERTAS -->
+        <link href=<?php echo base_url()."assets/admin/css/alerts.css"; ?> rel="stylesheet">
+        <?php
+          /*Manejando algún tipo de error con alert de CSS*/
+          if(isset($error))
+          {
+            echo "<div id='alert1' onClick='exit()' class='alert_error'><b>".$error."</b></div>";
+            echo "<script>";
+            echo "function exit(){document.getElementById('alert1').style.display='none'};";
+            echo "</script>";
+          }
+
+          /*Manejando exito con alert de CSS*/
+          if(isset($success))
+          {
+            echo "<div id='alert2' onClick='exit()' class='alert_success'><b>".$success."</b></div>";
+            echo "<script>";
+            echo "function exit(){document.getElementById('alert2').style.display='none'};";
+            echo "</script>";
+          }
+        ?> 
     <!-- Left column -->
     <div class="templatemo-flex-row">
       <div class="templatemo-sidebar">
@@ -30,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <nav class="templatemo-left-nav">  
 			 <!--Font awesome icons fa fa-home fa-fw at https://fontawesome.com/v4.7.0/icons/-->        
           <ul>
-            <li><a href= <?php echo base_url().index_page()."/admin/welcome "; if($active=='welcome'){echo "class='active'";}?> ><i class="fa fa-suitcase fa-fw"></i>Inicio</a></li>
+            <li><a href= <?php echo base_url().index_page()."/admin/welcome "; if($active=='welcome'){echo "class='active'";}?> ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
             <li><a href= <?php echo base_url().index_page()."/admin/products "; if($active=='prod'){echo "class='active'";}?> ><i class="fa fa-suitcase fa-fw"></i>Productos</a></li>
 				    <li><a href=<?php echo base_url().index_page()."/admin/offers "; if($active=='off'){echo "class='active'";}?>><i class="fa fa-tags fa-fw"></i>Ofertas</a></li>
 				    <li><a href=<?php echo base_url().index_page()."/admin/sales "; if($active=='sales'){echo "class='active'";}?>><i class="fa fa-money fa-fw"></i>Ventas</a></li>

@@ -7,10 +7,5 @@ class AdminDAO extends CI_Model
 	{
 		parent::__construct();
 	}
-
-	public function insertProduct()
-	{
-		
-	}
 }
 ?>

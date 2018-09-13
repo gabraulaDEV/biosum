@@ -1,13 +1,91 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-      <!-- Main content --> 
+?>     
+      <div class="contenido_sobrepuesto" id="cont_sobre1">
+        
+        <!-- Contenido para agregar producto -->
+        <link href=<?php echo base_url()."assets/admin/css/contenido-sobrepuesto.css"; ?> rel="stylesheet">
+        <div class="agregar_producto">
+          <div class="top">
+            <a href="#" onClick="ocultar1()">CERRAR</a>
+          </div>
+          <div class="content">
+            <h2>Agregar producto</h2>
+            <hr/>
+            <div class="div_form">
+              <form id="formRegister" method="POST" action=<?php echo base_url().index_page()."/admin/agregarProducto ";?> enctype="multipart/form-data">
+                <label for="itFullName">Seleccionar imagen</label>
+                <input type="file" name="file_image" required="true">
+
+                <label for="itUserName">Referencia</label>
+                <input type="text" id="prod_ref" name="prod_ref" placeholder="Referencia..." required="true">
+
+                <label for="itEmail">Modelo</label>
+                <input type="text" id="prod_model" name="prod_model" placeholder="Modelo..." required="true">
+
+                <label for="itPhone">Impresoras compatibles</label>
+                <input type="text" id="prod_desc" name="prod_desc" placeholder="Impresoras..." required="true">
+
+                <label for="itPhone">Colores</label>
+                <?php
+                if(isset($colores))
+                {
+                  for($i=0;$i<count($colores);$i++)
+                  {
+                    echo "<div class='check_container' >";
+                      echo "<div><input type='checkbox' name='prod_colors[]' value='".$colores[$i]['cod_color']."' checked />".$colores[$i]['nom_color']."</div>";
+                    echo "</div>";
+                  }
+                  
+                }
+                else
+                {
+                  echo "<div class='check_container' >";
+                    echo "<div><input type='checkbox' name='prod_colors[]' value='NONE' checked />NO HAY</div>";
+                  echo "</div>";
+                }
+                ?>             
+
+                <label for="cat">Categoría</label>
+                <select id='cat' name='prod_cat'>
+                <?php
+                if(isset($categorias))
+                {
+                  for($i=0;$i<count($categorias);$i++)
+                  {                    
+                      echo "<option value='".$categorias[$i]['id']."'>".$categorias[$i]['nom_categoria']."</option>";               
+                  }                  
+                }
+                else
+                {
+                  echo "<option value='NONE'>NO HAY</option>";  
+                }
+                ?> 
+                </select> 
+               
+
+                <label for="tipo">Tipo</label>
+                <select id="tipo" name="prod_tipo">
+                  <option value="Genérico">Genérico</option>
+                  <option value="Original">Original</option>
+                </select>
+
+                <label for="itPhone">Precio con IVA</label>
+                <input type="number" id="prod_price" name="prod_price" placeholder="Precio (IVA INC)..." required="true">
+              
+                <input type="submit" id="bRegister" value="Agregar">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- Main content --> 
       <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-top-nav-container">
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href="#">Agregar producto</a></li>
+                <li><a href="#" onClick="mostrar1()">Agregar producto</a></li>
                 <li><a href=<?php echo base_url().index_page()."/admin/loadImport "; ?> >Importar Productos</a></li>
               </ul>  
             </nav> 
@@ -60,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </table>    
                 </div>                          
               </div>
-            </div>           
+            </div>         
           </div> <!-- Second row ends -->
           </div>
           <footer class="text-right">
@@ -116,6 +194,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       
     </script>
     <script type="text/javascript" src=<?php echo base_url()."assets/admin/js/admin-script.js"; ?> ></script>
+    <!-- Agregar producto -->
+    <script type="text/javascript" src=<?php echo base_url()."assets/admin/js/agregar-producto.js"; ?> ></script>
 
   </body>
 </html>

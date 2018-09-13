@@ -18,29 +18,17 @@ class Admin extends CI_Controller {
 		}
 		else
 		{
-			/*TODO VALIDAR SESION CON CONSULTA EN DB*/
-			/*$success=true;
-			if(!$success)
+			$this->load->model('UsuarioDAO');
+			$query = $this->UsuarioDAO->selectAdmin($this->input->post('itUser'),$this->input->post('itPass'));
+			if($query != null)
 			{
-				$this->load->view('admin/content/login');
+				$this->session->set_userdata(array('sessionid'=> (int)$query));
+				$this->welcome();
+			}else{
+				/*Mensaje de error*/
+				$params['error'] = "Datos inválidos";
+				$this->load->view('admin/content/login',$params);
 			}
-			else
-			{
-				$this->session->set_userdata(array('sessionid'=>1));
-				$this->products();
-				*/
-
-		$this->load->model('UsuarioDAO');
-		$query = $this->UsuarioDAO->selectAdmin($this->input->post('itUser'),$this->input->post('itPass'));
-		if($query != null)
-		{
-			$this->session->set_userdata(array('sessionid'=> (int)$query));
-			$this->products();
-		}else{
-			/*Mensaje de error*/
-			$params['error'] = "Datos inválidos";
-			$this->load->view('admin/content/login',$params);
-		}
 	    }
 	}
 
@@ -64,15 +52,107 @@ class Admin extends CI_Controller {
 		
 	}
 
+	/***
+	*
+	* PRODUCTOS
+	*
+	*
+	*
+	*****/
+
 	public function products()
 	{
 		if($this->isSession()){
+			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO
+			$this->load->model('CategoriaDAO');
+			$categorias=$this->CategoriaDAO->nombresCategorias();
+			//COLOCAMOS LAS CATEGORIAS EN PARAMS
+			$params["categorias"]=$categorias;
+			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO
+			$this->load->model('ColorDAO');
+			$colores=$this->ColorDAO->colores();
+			//COLOCAMOS LOS COLORES EN PARAMS
+			$params['colores']=$colores;
+			//MENU ACTIVO PRODUCTOS
 			$params["active"]="prod";
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/products');
 		}
-		
+	}
+
+	public function agregarProducto()
+	{
+		if($this->input->post('prod_ref')==null || $this->input->post('prod_model')==null || $this->input->post('prod_desc')==null || $this->input->post('prod_price')==null || $this->input->post('prod_cat')=="NONE" || count($this->input->post('prod_colors'))==0)
+		{
+			//MANEJO DE ERROR CMAPOS VACIOS
+			$params["error"]="CAMPOS VACIOS";
+		}
+		else if($this->input->post('prod_colors')[0]=="NONE")
+		{
+			//MANEJO DE ERROR CMAPOS VACIOS
+			$params["error"]="CAMPOS VACIOS";
+		}
+		else if($_FILES['file_image']['type']!="image/png" && $_FILES['file_image']['type']!="image/jpeg" && $_FILES['file_image']['type']!="image/jpg")
+		{
+			//ERROR DE SUBIDA DE IMAGEN
+			$params["error"]=$_FILES['file_image']['type']." FORMATO NO SOPORTADO PARA IMAGEN DE PRODUCTO";
+		}
+		else
+		{
+			//INSERT DE PRODUCTOOOO
+			$this->load->model('ProductoDAO');
+			//VERIFICAR QUE NO EXISTA
+			if(count($this->ProductoDAO->productoProRefTipo($this->input->post('prod_ref'),$this->input->post('prod_tipo')))>0)
+			{
+				$params["error"]="El producto ya existe";
+			}
+			else
+			{
+				if($this->ProductoDAO->insertProduct(
+					$this->input->post('prod_ref'),
+					$this->input->post('prod_model'),
+					$this->input->post('prod_desc'),
+					$this->input->post('prod_tipo'),
+					$this->input->post('prod_price'),
+					$this->input->post('prod_cat')))
+				{
+					$params["success"]="Producto agregado, error al agregar el color";
+					//INSERT COLORES
+					$this->load->model('ColorDAO');
+					if($this->ColorDAO->insertColorProducto($this->input->post('prod_ref'),$this->input->post('prod_model')
+						,$this->input->post('prod_tipo'),$this->input->post('prod_colors')))
+					{
+						$params["success"]="Producto agregado satisfactoriamete";
+					}
+					else
+					{
+						$params["error"]="Error al agregar el color";
+					}
+
+				}
+				else
+				{
+					$params["error"]="Error al agregar el producto";
+				}
+			}			
+			
+		}
+		//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO
+		$this->load->model('CategoriaDAO');
+		$categorias=$this->CategoriaDAO->nombresCategorias();
+		//COLOCAMOS LAS CATEGORIAS EN PARAMS
+		$params["categorias"]=$categorias;
+		//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO
+		$this->load->model('ColorDAO');
+		$colores=$this->ColorDAO->colores();
+		//COLOCAMOS LOS COLORES EN PARAMS
+		$params['colores']=$colores;
+		//MENU ACTIVO PRODUCTOS
+		$params["active"]="prod";
+		$this->load->view('admin/template/header');
+		$this->load->view('admin/template/sidenav',$params);
+		$this->load->view('admin/content/products');
 	}
 
 	public function offers()
@@ -119,23 +199,6 @@ class Admin extends CI_Controller {
 		
 	} 
 
-<<<<<<< HEAD
-	private function isSession(){
-		$session = false;
-		if($this->session->userdata('sessionid')==null){
-			$this->load->view('admin/content/login');
-		}else{
-			$session = true;
-		}
-
-		return $session;
-	}
-	
-	private function cargarMisDatos(){
-		$this->load->model('UsuarioDAO');
-		$gb_data = $this->UsuarioDAO->getById($this->session->userdata('sessionid'));
-		return $gb_data;
-=======
 	/*
 	*
 	*
@@ -165,7 +228,31 @@ class Admin extends CI_Controller {
 		{
 			echo "No es un excel";
 		}
+	}
+/*
+<<<<<<< HEAD
+*/
+	private function isSession(){
+		$session = false;
+		if($this->session->userdata('sessionid')==null){
+			$this->load->view('admin/content/login');
+		}else{
+			$session = true;
+		}
+
+		return $session;
+	}
+	
+	private function cargarMisDatos(){
+		$this->load->model('UsuarioDAO');
+		$gb_data = $this->UsuarioDAO->getById($this->session->userdata('sessionid'));
+		return $gb_data;
+	}
+/*
+=======
+	
 		
 >>>>>>> 7c33ad0bda2d568822e0c51bf7223d0f58d46364
-	}
+*/
+	
 }

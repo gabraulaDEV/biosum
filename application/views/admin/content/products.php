@@ -172,7 +172,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
             </div>
           </div> <!-- Second row ends -->
-          </div>
           <footer class="text-right">
             <p>Copyright &copy; 2084 Biosuministros
             | Designed template view by <a href="http://www.templatemo.com" target="_parent">templatemo</a>

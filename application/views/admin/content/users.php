@@ -67,23 +67,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
             </div>           
           </div> <!-- Second row ends -->
-          <div class="templatemo-flex-row flex-content-row templatemo-overflow-hidden"> <!-- overflow hidden for iPad mini landscape view-->
-            <div class="col-1 templatemo-overflow-hidden">
-              <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
-                <i class="fa fa-times"></i>
-                <div class="templatemo-flex-row flex-content-row">
-                  <div class="col-1 col-lg-6 col-md-12">
-                    <h2 class="text-center">Modular<span class="badge">new</span></h2>
-                    <div id="pie_chart_div" class="templatemo-chart"></div> <!-- Pie chart div -->
-                  </div>
-                  <div class="col-1 col-lg-6 col-md-12">
-                    <h2 class="text-center">Interactive<span class="badge">new</span></h2>
-                    <div id="bar_chart_div" class="templatemo-chart"></div> <!-- Bar chart div -->
-                  </div>  
-                </div>                
-              </div>
-            </div>
-          </div>
           <footer class="text-right">
             <p>Copyright &copy; 2084 Biosuministros 
             | Designed template view by <a href="http://www.templatemo.com" target="_parent">templatemo</a>

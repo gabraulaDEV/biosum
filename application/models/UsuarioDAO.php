@@ -72,5 +72,23 @@ class UsuarioDAO extends CI_Model{
 			return false;
 		}
 	}
+
+	function update1($nom,$ape,$mail,$tel,$id)
+	{
+		$success=false;
+		$query="UPDATE gb_usuario SET usuario_nombre=?, usuario_apellido=?, usuario_email=?, usuario_telefono=? WHERE id=?";
+		try
+		{
+			if($this->db->query($query,array($nom,$ape,$mail,$tel,$id)))
+			{
+				$success=true;
+			}
+		}
+		catch(Exception $e)
+		{
+
+		}
+		return $success;
+	}
 }
 ?>

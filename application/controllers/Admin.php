@@ -86,17 +86,26 @@ class Admin extends CI_Controller {
 		if($this->input->post('prod_ref')==null || $this->input->post('prod_model')==null || $this->input->post('prod_desc')==null || $this->input->post('prod_price')==null || $this->input->post('prod_cat')=="NONE" || count($this->input->post('prod_colors'))==0)
 		{
 			//MANEJO DE ERROR CMAPOS VACIOS
-			$params["error"]="CAMPOS VACIOS";
+			$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
+            $alert=$alert."<script>";
+            $alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+            $alert=$alert."</script>";
 		}
 		else if($this->input->post('prod_colors')[0]=="NONE")
 		{
 			//MANEJO DE ERROR CMAPOS VACIOS
-			$params["error"]="CAMPOS VACIOS";
+			$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
+            $alert=$alert."<script>";
+            $alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+            $alert=$alert."</script>";
 		}
 		else if($_FILES['file_image']['type']!="image/png" && $_FILES['file_image']['type']!="image/jpeg" && $_FILES['file_image']['type']!="image/jpg")
 		{
 			//ERROR DE SUBIDA DE IMAGEN
-			$params["error"]=$_FILES['file_image']['type']." FORMATO NO SOPORTADO PARA IMAGEN DE PRODUCTO";
+			$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
+            $alert=$alert."<script>";
+            $alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+            $alert=$alert."</script>";
 		}
 		else
 		{
@@ -108,7 +117,7 @@ class Admin extends CI_Controller {
 			{
 				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
             	$alert=$alert."<script>";
-            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
             	$alert=$alert."</script>";
 			}
 			else
@@ -128,14 +137,14 @@ class Admin extends CI_Controller {
 					{
 						$alert=$alert."<div id='alert1' onClick='exit()' class='alert_success'><b>El producto se agregó correctamente</b></div>";
 		            	$alert=$alert."<script>";
-		            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+		            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
 		            	$alert=$alert."</script>";
 					}
 					else
 					{
 						$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El prodcuto se agregó, pero el color no</b></div>";
 		            	$alert=$alert."<script>";
-		            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+		            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
 		            	$alert=$alert."</script>";
 					}
 
@@ -144,7 +153,7 @@ class Admin extends CI_Controller {
 				{
 					$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>Eror al agregar producto</b></div>";
 	            	$alert=$alert."<script>";
-	            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none'};";
+	            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
 	            	$alert=$alert."</script>";
 				}
 			}			
@@ -152,6 +161,7 @@ class Admin extends CI_Controller {
 		}
 		$this->products();
 		echo $alert;
+		
 	}
 
 	public function offers()

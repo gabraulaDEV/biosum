@@ -22,7 +22,7 @@ class UsuarioDAO extends CI_Model{
 	  	if($query->row() != null)
 	  	{
 	  		$row = $query->row();
-	  		if((int)$row->rango > 0)
+	  		if((int)$row->rango > 1)
 	  		{
  				$resultSet = $row->id;
 	  		} 
@@ -52,6 +52,22 @@ class UsuarioDAO extends CI_Model{
 	  	return $resultSet;
 	}
 
+	function getByRango($rango)
+	{
+		$usuarios=[];
+		$query="SELECT id,usuario_nombre,usuario_apellido,usuario_email,usuario_telefono,direccion,estado FROM gb_usuario WHERE rango = ? ORDER BY id DESC";
+		try
+		{
+			$resultset=$this->db->query($query,array($rango));
+			$usuarios=$resultset->result_array();
+		}
+		catch(Exception $e)
+		{
+
+		}
+		return $usuarios;
+	}
+
 	function insertUser($usuario_nombre, $usuario_apellido, $usuario_password, $usuario_email, $estado, $rango, $usuario_telefono,$direccion)
 	{
 		try{
@@ -73,6 +89,7 @@ class UsuarioDAO extends CI_Model{
 		}
 	}
 
+<<<<<<< HEAD
 	public function cargarUsuarios($pagina,$rowsPerPage){
 		$query = "SELECT * FROM gb_usuario ORDER BY id asc LIMIT ? OFFSET ? ";
 		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));
@@ -83,6 +100,24 @@ class UsuarioDAO extends CI_Model{
 		$query = "SELECT COUNT(*) as resultadoConteo FROM gb_usuario";
 		$resultSet = $this->db->query($query);
 		return $resultSet->row()->resultadoConteo;
+=======
+	function update1($nom,$ape,$mail,$tel,$id)
+	{
+		$success=false;
+		$query="UPDATE gb_usuario SET usuario_nombre=?, usuario_apellido=?, usuario_email=?, usuario_telefono=? WHERE id=?";
+		try
+		{
+			if($this->db->query($query,array($nom,$ape,$mail,$tel,$id)))
+			{
+				$success=true;
+			}
+		}
+		catch(Exception $e)
+		{
+
+		}
+		return $success;
+>>>>>>> 763d4fc45382bf5732f696cd3117edef1abdd77a
 	}
 }
 ?>

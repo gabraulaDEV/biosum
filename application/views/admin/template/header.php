@@ -28,4 +28,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link href=<?php echo base_url()."assets/admin/css/alerts.css"; ?> rel="stylesheet">
+    <link href=<?php echo base_url()."assets/admin/css/contenido-sobrepuesto.css"; ?> rel="stylesheet">
   </head>

@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="contenido_sobrepuesto" id="cont_sobre1">
 
         <!-- Contenido para agregar producto -->
-        <link href=<?php echo base_url()."assets/admin/css/contenido-sobrepuesto.css"; ?> rel="stylesheet">
         <div class="agregar_producto">
           <div class="top">
                 <h2 style="float:right">Agregar producto</h2>
@@ -183,9 +182,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </form></center>
             </div>
           </div> <!-- Second row ends -->
-          </div>
           <footer class="text-right">
-            <p>Copyright &copy; 2084 Biosuministros
+            <p>Copyright &copy; 2018 Biosuministros
             | Designed template view by <a href="http://www.templatemo.com" target="_parent">templatemo</a>
             <!--| Development by: danieldmc123@hotmail.com vapedraza1706@gmail.com -->
             </p>

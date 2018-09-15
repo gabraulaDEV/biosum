@@ -52,7 +52,7 @@ class UsuarioDAO extends CI_Model{
 	  	return $resultSet;
 	}
 
-	function getByRango($rango)
+	public function getByRango($rango)
 	{
 		$usuarios=[];
 		$query="SELECT id,usuario_nombre,usuario_apellido,usuario_email,usuario_telefono,direccion,estado FROM gb_usuario WHERE rango = ? ORDER BY id DESC";
@@ -89,7 +89,20 @@ class UsuarioDAO extends CI_Model{
 		}
 	}
 
-	function update1($nom,$ape,$mail,$tel,$id)
+
+	public function cargarUsuarios($pagina,$rowsPerPage){
+		$query = "SELECT * FROM gb_usuario ORDER BY id asc LIMIT ? OFFSET ? ";
+		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));
+		return $resultSet->result_array();
+	}
+
+	public function paginacionCargarUsuarios(){
+		$query = "SELECT COUNT(*) as resultadoConteo FROM gb_usuario";
+		$resultSet = $this->db->query($query);
+		return $resultSet->row()->resultadoConteo;
+	}
+
+	public function update1($nom,$ape,$mail,$tel,$id)
 	{
 		$success=false;
 		$query="UPDATE gb_usuario SET usuario_nombre=?, usuario_apellido=?, usuario_email=?, usuario_telefono=? WHERE id=?";
@@ -105,18 +118,8 @@ class UsuarioDAO extends CI_Model{
 
 		}
 		return $success;
-	}
-	
-	public function cargarUsuarios($pagina,$rowsPerPage){
-		$query = "SELECT * FROM gb_usuario ORDER BY id asc LIMIT ? OFFSET ? ";
-		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));
-		return $resultSet->result_array();
+
 	}
 
-	public function paginacionCargarUsuarios(){
-		$query = "SELECT COUNT(*) as resultadoConteo FROM gb_usuario";
-		$resultSet = $this->db->query($query);
-		return $resultSet->row()->resultadoConteo;
-	}
 }
 ?>

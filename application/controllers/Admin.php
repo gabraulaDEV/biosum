@@ -92,13 +92,9 @@ class Admin extends CI_Controller {
 		
 	}
 
-	/***
-	*
+	/*
 	* PRODUCTOS
-	*
-	*
-	*
-	*****/
+	*/
 
 	public function products()
 	{
@@ -190,11 +186,13 @@ class Admin extends CI_Controller {
 		
 	}
 
+
 	public function cargarProductos($pageCount, $rowsPerPage){
 		return $resultado = $this->ProductoDAO->cargarProductos($pageCount, $rowsPerPage);
 	}
 
 	public function paginacionCargarProductos(){
+
 		return $this->ProductoDAO->paginacionCargarProductos();
 	}
 
@@ -235,7 +233,6 @@ class Admin extends CI_Controller {
 		}
 		
 	} 
-
 	/***
 	*
 	* MANEJO DE USUARIOS
@@ -243,7 +240,6 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-
 	public function users()
 	{
 			if($this->isSession()){
@@ -261,14 +257,6 @@ class Admin extends CI_Controller {
 		}
 		
 	} 
-
-	public function cargarUsuarios($pageCount, $rowsPerPage){
-		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
-	}
-
-	public function paginacionCargarUsuarios(){
-		return $this->UsuarioDAO->paginacionCargarUsuarios();
-	}
 
 	public function admins()
 	{
@@ -321,6 +309,14 @@ class Admin extends CI_Controller {
 			echo $alert;
 		}
 
+	}
+
+	public function cargarUsuarios($pageCount, $rowsPerPage){
+		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
+	}
+
+	public function paginacionCargarUsuarios(){
+		return $this->UsuarioDAO->paginacionCargarUsuarios();
 	}
 
 
@@ -409,9 +405,17 @@ class Admin extends CI_Controller {
 			echo "No es un excel";
 		}
 	}
-/*
-<<<<<<< HEAD
-*/
+
+	/*
+	*
+	*
+	*
+	*
+	*
+	*
+	*UTILITYS
+	*/
+
 	private function isSession(){
 		$session = false;
 		if($this->session->userdata('sessionid')==null){
@@ -427,12 +431,6 @@ class Admin extends CI_Controller {
 		$gb_data = $this->UsuarioDAO->getById($this->session->userdata('sessionid'));
 		return $gb_data;
 	}
-/*
-=======
-	
-		
->>>>>>> 7c33ad0bda2d568822e0c51bf7223d0f58d46364
-*/
 
 	private function validateEmail($str)
 	{

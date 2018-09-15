@@ -57,6 +57,7 @@ class ProductoDAO extends CI_Model
 		$resultset=$this->db->query($query,array($ref,$tipo));
 		return $resultset->result_array();
 	}
+
 	public function cargarProductos($pagina,$rowsPerPage){
 		$query = "SELECT * FROM gb_producto ORDER BY id asc LIMIT ? OFFSET ? ";
 		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));

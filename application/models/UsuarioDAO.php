@@ -89,7 +89,6 @@ class UsuarioDAO extends CI_Model{
 		}
 	}
 
-<<<<<<< HEAD
 	public function cargarUsuarios($pagina,$rowsPerPage){
 		$query = "SELECT * FROM gb_usuario ORDER BY id asc LIMIT ? OFFSET ? ";
 		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));
@@ -100,7 +99,7 @@ class UsuarioDAO extends CI_Model{
 		$query = "SELECT COUNT(*) as resultadoConteo FROM gb_usuario";
 		$resultSet = $this->db->query($query);
 		return $resultSet->row()->resultadoConteo;
-=======
+
 	function update1($nom,$ape,$mail,$tel,$id)
 	{
 		$success=false;
@@ -117,7 +116,8 @@ class UsuarioDAO extends CI_Model{
 
 		}
 		return $success;
->>>>>>> 763d4fc45382bf5732f696cd3117edef1abdd77a
+
 	}
+}
 }
 ?>

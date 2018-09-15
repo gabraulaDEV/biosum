@@ -49,13 +49,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href=<?php echo base_url().index_page()."/admin/users "; ?>>Nuestros clientes</a></li>
-                <li><a href=<?php echo base_url().index_page()."/admin/admins "; ?>>Administradores</a></li>
+                <li><a href="<?php echo base_url().index_page()."/admin/users "; ?>">Nuestros clientes</a></li>
+                <li><a href="<?php echo base_url().index_page()."/admin/admins "; ?>">Administradores</a></li>
               </ul>  
             </nav> 
           </div>
         </div>
-<<<<<<< HEAD
+
         <div class="templatemo-content-container">
                     <div class="templatemo-flex-row flex-content-row templatemo-overflow-hidden"> <!-- overflow hidden for iPad mini landscape view-->
             <div class="col-1 templatemo-overflow-hidden">

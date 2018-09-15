@@ -121,6 +121,15 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	public function editProduct()
+	{
+		if($this->isSession()){
+			$params["active"]="prod";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/editProduct');
+		}
+	}
 	public function agregarProducto()
 	{
 		if($this->isSession())
@@ -185,7 +194,7 @@ class Admin extends CI_Controller {
 		
 	}
 
-<<<<<<< HEAD
+
 	public function cargarProductos($pageCount, $rowsPerPage){
 		$this->load->model("ProductoDAO");
 		return $resultado = $this->ProductoDAO->cargarProductos($pageCount, $rowsPerPage);
@@ -195,7 +204,6 @@ class Admin extends CI_Controller {
 		$this->load->model("ProductoDAO");
 		return $this->ProductoDAO->paginacionCargarProductos();
 	}
-=======
 	/***
 	*
 	* MANEJO DE OFERTAS
@@ -203,7 +211,7 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
->>>>>>> 763d4fc45382bf5732f696cd3117edef1abdd77a
+
 
 	public function offers()
 	{
@@ -235,11 +243,10 @@ class Admin extends CI_Controller {
 		
 	} 
 
-<<<<<<< HEAD
 	/**
 	* USUARIO
 	*/
-=======
+
 	/***
 	*
 	* MANEJO DE USUARIOS
@@ -248,7 +255,7 @@ class Admin extends CI_Controller {
 	*
 	*****/
 
->>>>>>> 763d4fc45382bf5732f696cd3117edef1abdd77a
+
 	public function users()
 	{
 		if($this->isSession())
@@ -265,7 +272,6 @@ class Admin extends CI_Controller {
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/users');
-			$this->load->view('admin/content/users_clients');
 		}
 		
 	}
@@ -320,8 +326,9 @@ class Admin extends CI_Controller {
 			$this->admins();
 			echo $alert;
 		}
+	}
 
-<<<<<<< HEAD
+
 	public function cargarUsuarios($pageCount, $rowsPerPage){
 		$this->load->model("UsuarioDAO");
 		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
@@ -334,8 +341,6 @@ class Admin extends CI_Controller {
 
 
 
-=======
-	}
 
 
 	/***
@@ -345,7 +350,7 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
->>>>>>> 763d4fc45382bf5732f696cd3117edef1abdd77a
+
 	public function config()
 	{
 			if($this->isSession()){

@@ -57,5 +57,17 @@ class ProductoDAO extends CI_Model
 		$resultset=$this->db->query($query,array($ref,$tipo));
 		return $resultset->result_array();
 	}
+
+	public function cargarProductos($pagina,$rowsPerPage){
+		$query = "SELECT * FROM gb_producto ORDER BY id asc LIMIT ? OFFSET ? ";
+		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));
+		return $resultSet->result_array();
+	}
+
+	public function paginacionCargarProductos(){
+		$query = "SELECT COUNT(*) as resultadoConteo FROM gb_producto WHERE prod_estado = 'ACTIVO'";
+		$resultSet = $this->db->query($query);
+		return $resultSet->row()->resultadoConteo;
+	}
 }
 ?>

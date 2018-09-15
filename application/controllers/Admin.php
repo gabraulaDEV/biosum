@@ -52,13 +52,9 @@ class Admin extends CI_Controller {
 		
 	}
 
-	/***
-	*
+	/*
 	* PRODUCTOS
-	*
-	*
-	*
-	*****/
+	*/
 
 	public function products()
 	{
@@ -75,6 +71,13 @@ class Admin extends CI_Controller {
 			$params['colores']=$colores;
 			//MENU ACTIVO PRODUCTOS
 			$params["active"]="prod";
+			//CARGAR LISTADO DE PRODUCTOS
+			$pA = $this->input->get('page');
+			$params["pagina_actual_listado_productos"] = $pA ?? 1;
+			$rowsPerPage = 10;
+			//CANTIDAD DE PAGINAS PARA LOS PRODUCTOS CARGADOS
+			$params["paginacion_listado_productos"]= (int)round($this->paginacionCargarProductos()/$rowsPerPage);
+			$params["listado_productos"]=$this->cargarProductos((int)$params["pagina_actual_listado_productos"],(int)$rowsPerPage);
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/products');
@@ -164,6 +167,16 @@ class Admin extends CI_Controller {
 		
 	}
 
+	public function cargarProductos($pageCount, $rowsPerPage){
+		$this->load->model("ProductoDAO");
+		return $resultado = $this->ProductoDAO->cargarProductos($pageCount, $rowsPerPage);
+	}
+
+	public function paginacionCargarProductos(){
+		$this->load->model("ProductoDAO");
+		return $this->ProductoDAO->paginacionCargarProductos();
+	}
+
 	public function offers()
 	{
 		if($this->isSession()){
@@ -186,16 +199,37 @@ class Admin extends CI_Controller {
 		
 	} 
 
+	/**
+	* USUARIO
+	*/
 	public function users()
 	{
 			if($this->isSession()){
 			$params["active"]="users";
+			//SE ESTABLECE LA CANTIDAD DE USUARIOS A CARGAR EN LA TABLA
+			$pA = $this->input->get('page');
+			$params["pagina_actual_listado_usuarios"] = $pA ?? 1;
+			$rowsPerPage = 10;
+			$params["paginacion_listado_usuarios"]= (int)round($this->paginacionCargarUsuarios()/$rowsPerPage);
+			$params["listado_usuarios"] = $this->cargarUsuarios((int)$params["pagina_actual_listado_usuarios"],(int)$rowsPerPage);
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/users');
 		}
 		
 	} 
+
+	public function cargarUsuarios($pageCount, $rowsPerPage){
+		$this->load->model("UsuarioDAO");
+		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
+	}
+
+	public function paginacionCargarUsuarios(){
+		$this->load->model("UsuarioDAO");
+		return $this->UsuarioDAO->paginacionCargarUsuarios();
+	}
+
+
 
 	public function config()
 	{

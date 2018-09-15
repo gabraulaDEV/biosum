@@ -14,60 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
         </div>
         <div class="templatemo-content-container">
-          <div class="templatemo-flex-row flex-content-row">
-            <div class="col-1">
-              <h4>Usuarios registrados</h4>
-              <hr/>
-              <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
-                <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Usuarios</h2></div>
-                <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <td>No.</td>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Username</td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1.</td>
-                        <td>John</td>
-                        <td>Smith</td>
-                        <td>@jS</td>
-                      </tr>
-                      <tr>
-                        <td>2.</td>
-                        <td>Bill</td>
-                        <td>Jones</td>
-                        <td>@bJ</td>
-                      </tr>
-                      <tr>
-                        <td>3.</td>
-                        <td>Mary</td>
-                        <td>James</td>
-                        <td>@mJ</td>
-                      </tr>
-                      <tr>
-                        <td>4.</td>
-                        <td>Steve</td>
-                        <td>Bride</td>
-                        <td>@sB</td>
-                      </tr>
-                      <tr>
-                        <td>5.</td>
-                        <td>Paul</td>
-                        <td>Richard</td>
-                        <td>@pR</td>
-                      </tr>                    
-                    </tbody>
-                  </table>    
-                </div>                          
-              </div>
-            </div>           
-          </div> <!-- Second row ends -->
-          <div class="templatemo-flex-row flex-content-row templatemo-overflow-hidden"> <!-- overflow hidden for iPad mini landscape view-->
+                    <div class="templatemo-flex-row flex-content-row templatemo-overflow-hidden"> <!-- overflow hidden for iPad mini landscape view-->
             <div class="col-1 templatemo-overflow-hidden">
               <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
                 <i class="fa fa-times"></i>
@@ -84,6 +31,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
             </div>
           </div>
+          <div class="templatemo-flex-row flex-content-row">
+            <div class="col-1">
+              <h4>Usuarios registrados</h4>
+              <hr/>
+              <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+                <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Usuarios</h2></div>
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <td>Id.</td>
+                        <td>Primer Nombre</td>
+                        <td>Apellido</td>
+                        <td>Correo Electrónico</td>
+                        <td>Estado</td>
+                        <td>Rango</td>
+                        <td>Teléfono</td>
+                        <td>Dirección</td>
+                        <td>Operaciones</td>
+                      </tr>
+                    </thead>
+                     <tbody>
+                      <?php
+                        for($i=0;$i<count($listado_usuarios);$i++)
+                        {
+                            echo "<tr>";
+                            echo "<td>".$listado_usuarios[$i]['id']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_nombre']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_apellido']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_email']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['estado']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['rango']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_telefono']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['direccion']."</td>";
+                           echo "<td><input type='submit' class='templatemo-blue-button width-100' value='Operacion' /></td>";
+                          echo "</tr>";
+                        }
+                      ?>
+                    </tbody>
+                  </table> 
+                </div>   
+                <center>
+              <form method="get">
+              <button type='submit' name="page" class='templatemo-blue-button width-20' value='1'>Primera</button>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value="<?php if($pagina_actual_listado_usuarios-1 > 1){ echo $pagina_actual_listado_usuarios -1; }else{ echo 1;}?>" >Anterior</button>
+               <?php echo $pagina_actual_listado_usuarios; ?>..<?php echo $paginacion_listado_usuarios; ?>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value="<?php if($pagina_actual_listado_usuarios+1 < $pagina_actual_listado_usuarios){ echo $pagina_actual_listado_usuarios +1; }else{ echo $pagina_actual_listado_usuarios;}?>" >Siguiente</button>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value='<?php echo $pagina_actual_listado_usuarios;?>'>Última</button>
+            </form></center>                       
+              </div>
+            </div>           
+          </div> <!-- Second row ends -->
           <footer class="text-right">
             <p>Copyright &copy; 2084 Biosuministros 
             | Designed template view by <a href="http://www.templatemo.com" target="_parent">templatemo</a>

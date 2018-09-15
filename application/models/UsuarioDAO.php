@@ -55,7 +55,7 @@ class UsuarioDAO extends CI_Model{
 	public function getByRango($rango)
 	{
 		$usuarios=[];
-		$query="SELECT id,usuario_nombre,usuario_apellido,usuario_email,usuario_telefono,direccion,estado FROM gb_usuario WHERE rango = ? ORDER BY id DESC";
+		$query="SELECT id,usuario_nombre,usuario_apellido,usuario_email,usuario_telefono,direccion,estado FROM gb_usuario WHERE rango = ? ORDER BY id ASC";
 		try
 		{
 			$resultset=$this->db->query($query,array($rango));
@@ -120,6 +120,12 @@ class UsuarioDAO extends CI_Model{
 		return $success;
 
 	}
+
+	public function getUserByEmail($email)
+	{
+		$resultSet = $this->db->query("SELECT * FROM  gb_usuario WHERE usuario_email = ?", array($email));
+		return $resultSet->result_array();
+	} 
 
 }
 ?>

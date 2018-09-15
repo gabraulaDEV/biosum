@@ -123,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
           </div>
           <footer class="text-right">
-            <p>Copyright &copy; 2084 Biosuministros 
+            <p>Copyright &copy; 2018 Biosuministros 
             | Designed template view by <a href="http://www.templatemo.com" target="_parent">templatemo</a>
             <!--| Development by: danieldmc123@hotmail.com vapedraza1706@gmail.com -->
             </p>

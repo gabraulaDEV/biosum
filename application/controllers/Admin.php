@@ -3,10 +3,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		
+		/*
+		*
+		*
+		*CARGA DE MODELOS NECESARIOS
+		*/
+		$this->load->model('UsuarioDAO');
+		$this->load->model('CategoriaDAO');
+		$this->load->model('ColorDAO');
+	}
+
 	public function index()
 	{
 		$this->load->view('admin/content/login');
 	}
+
+	/***
+	*
+	* INICIO DE SESION
+	*
+	*
+	*
+	*****/
 
 	public function login()
 	{
@@ -18,7 +40,7 @@ class Admin extends CI_Controller {
 		}
 		else
 		{
-			$this->load->model('UsuarioDAO');
+			
 			$query = $this->UsuarioDAO->selectAdmin($this->input->post('itUser'),$this->input->post('itPass'));
 			if($query != null)
 			{
@@ -32,6 +54,14 @@ class Admin extends CI_Controller {
 	    }
 	}
 
+	/***
+	*
+	* CERRAR SESION
+	*
+	*
+	*
+	*****/
+
 	public function logout()
 	{
 		/*Vaciar sessionid*/
@@ -39,6 +69,15 @@ class Admin extends CI_Controller {
 		/*Redireccionar a login*/
 		$this->load->view('admin/content/login');
 	}
+
+
+	/***
+	*
+	* PANTALLA BIENVENIDA
+	*
+	*
+	*
+	*****/
 
 	public function welcome()
 	{
@@ -63,13 +102,11 @@ class Admin extends CI_Controller {
 	public function products()
 	{
 		if($this->isSession()){
-			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO
-			$this->load->model('CategoriaDAO');
+			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO			
 			$categorias=$this->CategoriaDAO->nombresCategorias();
 			//COLOCAMOS LAS CATEGORIAS EN PARAMS
 			$params["categorias"]=$categorias;
-			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO
-			$this->load->model('ColorDAO');
+			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO			
 			$colores=$this->ColorDAO->colores();
 			//COLOCAMOS LOS COLORES EN PARAMS
 			$params['colores']=$colores;
@@ -85,42 +122,30 @@ class Admin extends CI_Controller {
 	{
 		if($this->isSession())
 		{
+			$alert="";
 			if($this->input->post('prod_ref')==null || $this->input->post('prod_model')==null || $this->input->post('prod_desc')==null || $this->input->post('prod_price')==null || $this->input->post('prod_cat')=="NONE" || count($this->input->post('prod_colors'))==0)
 			{
 				//MANEJO DE ERROR CMAPOS VACIOS
-				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
-	            $alert=$alert."<script>";
-	            $alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-	            $alert=$alert."</script>";
+	            $alert=$this->alertError("Campos vacíos");
 			}
 			else if($this->input->post('prod_colors')[0]=="NONE")
 			{
 				//MANEJO DE ERROR CMAPOS VACIOS
-				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
-	            $alert=$alert."<script>";
-	            $alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-	            $alert=$alert."</script>";
+	            $alert=$this->alertError("Campos vacíos, no hay colores");
 			}
 			else if($_FILES['file_image']['type']!="image/png" && $_FILES['file_image']['type']!="image/jpeg" && $_FILES['file_image']['type']!="image/jpg")
 			{
 				//ERROR DE SUBIDA DE IMAGEN
-				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
-	            $alert=$alert."<script>";
-	            $alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-	            $alert=$alert."</script>";
+	            $alert=$this->alertError("Tipo de imagen no soportada");
 			}
 			else
 			{
-				$alert="";
 				//INSERT DE PRODUCTOOOO
 				$this->load->model('ProductoDAO');
 				//VERIFICAR QUE NO EXISTA
 				if(count($this->ProductoDAO->productoProRefTipo($this->input->post('prod_ref'),$this->input->post('prod_tipo')))>0)
 				{
-					$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El producto ya existe</b></div>";
-	            	$alert=$alert."<script>";
-	            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-	            	$alert=$alert."</script>";
+	            	$alert=$this->alertError("El producto ya existe");
 				}
 				else
 				{
@@ -133,30 +158,20 @@ class Admin extends CI_Controller {
 						$this->input->post('prod_cat')))
 					{
 						//INSERT COLORES
-						$this->load->model('ColorDAO');
 						if($this->ColorDAO->insertColorProducto($this->input->post('prod_ref'),$this->input->post('prod_model')
 							,$this->input->post('prod_tipo'),$this->input->post('prod_colors')))
 						{
-							$alert=$alert."<div id='alert1' onClick='exit()' class='alert_success'><b>El producto se agregó correctamente</b></div>";
-			            	$alert=$alert."<script>";
-			            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-			            	$alert=$alert."</script>";
+			            	$alert=$this->alertSuccess("El producto se agregó correctamente");
 						}
 						else
 						{
-							$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El prodcuto se agregó, pero el color no</b></div>";
-			            	$alert=$alert."<script>";
-			            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-			            	$alert=$alert."</script>";
+			            	$alert=$this->alertError("El prodcuto se agregó, pero el color no");
 						}
 
 					}
 					else
 					{
-						$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>Eror al agregar producto</b></div>";
-		            	$alert=$alert."<script>";
-		            	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-		            	$alert=$alert."</script>";
+		            	$alert=$this->alertError("Eror al agregar producto");
 					}
 				}			
 				
@@ -166,6 +181,14 @@ class Admin extends CI_Controller {
 		}
 		
 	}
+
+	/***
+	*
+	* MANEJO DE OFERTAS
+	*
+	*
+	*
+	*****/
 
 	public function offers()
 	{
@@ -178,6 +201,14 @@ class Admin extends CI_Controller {
 		
 	} 
 
+	/***
+	*
+	* MANEJO DE VENTAS
+	*
+	*
+	*
+	*****/
+
 	public function sales()
 	{
 		if($this->isSession()){
@@ -189,16 +220,81 @@ class Admin extends CI_Controller {
 		
 	} 
 
+	/***
+	*
+	* MANEJO DE USUARIOS
+	*
+	*
+	*
+	*****/
+
 	public function users()
 	{
-			if($this->isSession()){
+		if($this->isSession())
+		{
+			$usuarios=$this->UsuarioDAO->getByRango(1);
+			$params['users']=$usuarios;
 			$params["active"]="users";
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/users');
+			$this->load->view('admin/content/users_clients');
 		}
 		
-	} 
+	}
+
+	public function admins()
+	{
+		if($this->isSession())
+		{
+			$usuarios=$this->UsuarioDAO->getByRango(3);
+			$params['users']=$usuarios;
+			$params["active"]="users";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/users');
+			$this->load->view('admin/content/users_admins');
+		}
+	}
+
+	public function agregarAdmin()
+	{
+		if($this->isSession())
+		{
+			$alert="";
+			if($this->input->post('user_nom')==null || $this->input->post('user_ape')==null || $this->input->post('user_mail')==null || $this->input->post('user_phone')==null || $this->input->post('user_pass1')==null || $this->input->post('user_pass2')==null)
+			{
+				$alert=$this->alertError("Campos vacíos");
+			}
+			else if(strlen($this->input->post('user_nom'))>30 || strlen($this->input->post('user_ape'))>30)
+			{
+				$alert=$this->alertError("El nombre y el apellido no pueden sobre pasar los 29 caracteres");
+			}
+			else if(strlen($this->input->post('user_phone'))>12)
+			{
+				$alert=$this->alertError("El teléfono es inválido");
+			}
+			else if(!$this->validateEmail($this->input->post('user_mail')))
+			{
+				$alert=$this->alertError("El correo '".$this->input->post('user_mail')."' es inválido");
+			}
+			else if($this->input->post('user_pass1')!=$this->input->post('user_pass2'))
+			{
+				$alert=$this->alertError("Contraseñas no coinciden");
+			}
+			else if($this->UsuarioDAO->insertUser($this->input->post('user_nom'), $this->input->post('user_ape'),$this->input->post('user_pass1'),$this->input->post('user_mail'),"Activo",3,$this->input->post('user_phone'),$this->input->post('user_dir')))
+			{
+				$alert=$this->alertSuccess("Administrador agregado correctamnete");
+			}
+			else
+			{
+				$alert=$this->alertError("Un error ha ocurrido");
+			}
+			$this->admins();
+			echo $alert;
+		}
+
+	}
 
 
 	/***
@@ -225,42 +321,34 @@ class Admin extends CI_Controller {
 		if($this->isSession())
 		{
 			$alert="";
-			$this->load->model('UsuarioDAO');
 			if($this->input->post('user_nom')==null || $this->input->post('user_ape')==null || $this->input->post('user_mail')==null || $this->input->post('user_phone')==null)
 			{
-				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>Campos vacíos</b></div>";
-			   	$alert=$alert."<script>";
-			   	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-			  	$alert=$alert."</script>";
+				$alert=$this->alertError("Campos vacíos");
 			}
 			else if(strlen($this->input->post('user_nom'))>29 || strlen($this->input->post('user_ape'))>29)
 			{
-				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>El nombre y el apellido no pueden sobre pasar los 30 carateres</b></div>";
-			   	$alert=$alert."<script>";
-			   	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-			  	$alert=$alert."</script>";
+			  	$alert=$this->alertError("El nombre y el apellido no pueden sobre pasar los 30 carateres");
 
+			}
+			else if(strlen($this->input->post('user_phone'))>12)
+			{
+				$alert=$this->alertError("El teléfono es inválido");
+			}
+			else if(!$this->validateEmail($this->input->post('user_mail')))
+			{
+				$alert=$this->alertError("El correo '".$this->input->post('user_mail')."' es inválido");
 			}
 			else if($this->UsuarioDAO->update1($this->input->post('user_nom'),$this->input->post('user_ape'),$this->input->post('user_mail'),$this->input->post('user_phone'),$this->session->userdata('sessionid')))
 			{
-				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_success'><b>Cambios exitosos</b></div>";
-			   	$alert=$alert."<script>";
-			   	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-			  	$alert=$alert."</script>";
-				
+			  	$alert=$this->alertSuccess("Cambios exitosos");				
 			}
 			else
 			{
-				$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>Error en cambio de datos</b></div>";
-			   	$alert=$alert."<script>";
-			   	$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
-			  	$alert=$alert."</script>";
+			  	$alert=$this->alertError("Error en cambio de datos");
 				
 			}
 			$this->config();
-			echo $alert;
-
-			
+			echo $alert;			
 		}
 	}
 
@@ -309,7 +397,6 @@ class Admin extends CI_Controller {
 	}
 	
 	private function cargarMisDatos(){
-		$this->load->model('UsuarioDAO');
 		$gb_data = $this->UsuarioDAO->getById($this->session->userdata('sessionid'));
 		return $gb_data;
 	}
@@ -319,5 +406,31 @@ class Admin extends CI_Controller {
 		
 >>>>>>> 7c33ad0bda2d568822e0c51bf7223d0f58d46364
 */
+
+	private function validateEmail($str)
+	{
+		$matches = null;
+  		return (1 === preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $str, $matches));
+	} 
+
+	private function alertError($msg)
+	{
+		$alert="";
+		$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>".$msg."</b></div>";
+		$alert=$alert."<script>";
+		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+		$alert=$alert."</script>";
+		return $alert;
+	}
+
+	private function alertSuccess($msg)
+	{
+		$alert="";
+		$alert=$alert."<div id='alert1' onClick='exit()' class='alert_success'><b>".$msg."</b></div>";
+		$alert=$alert."<script>";
+		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+		$alert=$alert."</script>";
+		return $alert;
+	}
 	
 }

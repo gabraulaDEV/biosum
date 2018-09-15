@@ -22,7 +22,7 @@ class UsuarioDAO extends CI_Model{
 	  	if($query->row() != null)
 	  	{
 	  		$row = $query->row();
-	  		if((int)$row->rango > 0)
+	  		if((int)$row->rango > 1)
 	  		{
  				$resultSet = $row->id;
 	  		} 
@@ -50,6 +50,22 @@ class UsuarioDAO extends CI_Model{
 	  	}
 
 	  	return $resultSet;
+	}
+
+	function getByRango($rango)
+	{
+		$usuarios=[];
+		$query="SELECT id,usuario_nombre,usuario_apellido,usuario_email,usuario_telefono,direccion,estado FROM gb_usuario WHERE rango = ? ORDER BY id DESC";
+		try
+		{
+			$resultset=$this->db->query($query,array($rango));
+			$usuarios=$resultset->result_array();
+		}
+		catch(Exception $e)
+		{
+
+		}
+		return $usuarios;
 	}
 
 	function insertUser($usuario_nombre, $usuario_apellido, $usuario_password, $usuario_email, $estado, $rango, $usuario_telefono,$direccion)

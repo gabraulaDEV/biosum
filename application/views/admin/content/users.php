@@ -5,11 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para agregar un administrador -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Agregar administrador</h2>
             <a href="#" style="float:left" onClick="ocultarAgregarAdmin()">CERRAR</a>
           </div>
           <div class="content">
-            <h2>Agregar producto</h2>
+            <h2>Agregar administrador</h2>
             <hr/>
             <div class="div_form">
               <form id="formAdmin" method="POST" action=<?php echo base_url().index_page()."/admin/agregarAdmin ";?>>

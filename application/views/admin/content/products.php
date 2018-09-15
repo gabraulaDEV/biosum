@@ -6,7 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para agregar producto -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Agregar producto</h2>
             <a href="#" style="float:left" onClick="ocultar1()">CERRAR</a>
           </div>
           <div class="content">
@@ -84,7 +83,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para importar producto -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Importar productos</h2>
             <a href="#" style="float:left" onClick="ocultar2()">CERRAR</a>
           </div>
           
@@ -134,33 +132,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <thead>
                       <tr>
                         <td>ID</td>
-                        <td>Imágen</td>
                         <td>Referencia</td>
                         <td>Modelo</td>
                         <td>Categoría</td>
                         <td>Tipo</td>
                         <td>Color</td>
                         <td>Descripción</td>
-                        <td>Precio</td>
-                        <td>Estado</td>
                         <td>Acción</td>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                        for($i=0;$i<50;$i++)
+                        for($i=0;$i<count($listado_productos);$i++)
                         {
-                          echo "<tr>";
-                            echo "<td>".$i."</td>";
-                            echo "<td>Imágen".$i."</td>";
-                            echo "<td>CB".$i."</td>";
-                            echo "<td>".$i."A</td>";
-                            echo "<td>Toner</td>";
-                            echo "<td>Genérico</td>";
+                            echo "<tr>";
+                            echo "<td>".$listado_productos[$i]['id']."</td>";
+                            echo "<td>".$listado_productos[$i]['prod_referencia']."</td>";
+                            echo "<td>".$listado_productos[$i]['prod_modelo']."</td>";
+                        
+                        ?>
+                        <?php
+                        for($z=0;$z<count($categorias);$z++){
+                          if($listado_productos[$z]['cod_cat'] == $z){
+                            echo "<td>".$categorias[$z]['nom_categoria']."</td>";
+                          }
+                        }
+                        ?>
+                        <?php
+                            echo "<td>".$listado_productos[$i]['tipo_producto']."</td>";
                             echo "<td>Cyan</td>";
                             echo "<td>Compatible con impresoras EPSON XR/HP XRS</td>";
-                            echo "<td>$2".$i."00000000</td>";
-                            echo "<td>Activo</td>";
+  
                             echo "<td><input type='submit' class='templatemo-blue-button width-100' value='Editar' /></td>";
                           echo "</tr>";
                         }
@@ -168,7 +170,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </div><center>
+              <form method="get">
+              <button type='submit' name="page" class='templatemo-blue-button width-20' value='1'>Primera</button>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value="<?php if($pagina_actual_listado_productos-1 > 1){ echo $pagina_actual_listado_productos -1; }else{ echo 1;}?>" >Anterior</button>
+               <?php echo $pagina_actual_listado_productos; ?>..<?php echo $paginacion_listado_productos; ?>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value="<?php if($pagina_actual_listado_productos+1 < $paginacion_listado_productos){ echo $pagina_actual_listado_productos +1; }else{ echo $paginacion_listado_productos;}?>" >Siguiente</button>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value='<?php echo $paginacion_listado_productos;?>'>Última</button>
+            </form></center>
             </div>
           </div> <!-- Second row ends -->
           <footer class="text-right">

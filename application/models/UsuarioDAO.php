@@ -106,5 +106,17 @@ class UsuarioDAO extends CI_Model{
 		}
 		return $success;
 	}
+	
+	public function cargarUsuarios($pagina,$rowsPerPage){
+		$query = "SELECT * FROM gb_usuario ORDER BY id asc LIMIT ? OFFSET ? ";
+		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));
+		return $resultSet->result_array();
+	}
+
+	public function paginacionCargarUsuarios(){
+		$query = "SELECT COUNT(*) as resultadoConteo FROM gb_usuario";
+		$resultSet = $this->db->query($query);
+		return $resultSet->row()->resultadoConteo;
+	}
 }
 ?>

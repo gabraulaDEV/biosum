@@ -12,6 +12,7 @@ class Admin extends CI_Controller {
 		*
 		*CARGA DE MODELOS NECESARIOS
 		*/
+		$this->load->model('ProductoDAO');
 		$this->load->model('UsuarioDAO');
 		$this->load->model('CategoriaDAO');
 		$this->load->model('ColorDAO');
@@ -102,16 +103,23 @@ class Admin extends CI_Controller {
 	public function products()
 	{
 		if($this->isSession()){
-			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO			
+			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO
 			$categorias=$this->CategoriaDAO->nombresCategorias();
 			//COLOCAMOS LAS CATEGORIAS EN PARAMS
 			$params["categorias"]=$categorias;
-			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO			
+			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO
 			$colores=$this->ColorDAO->colores();
 			//COLOCAMOS LOS COLORES EN PARAMS
 			$params['colores']=$colores;
 			//MENU ACTIVO PRODUCTOS
 			$params["active"]="prod";
+			//CARGAR LISTADO DE PRODUCTOS
+			$pA = $this->input->get('page');
+			$params["pagina_actual_listado_productos"] = $pA ?? 1;
+			$rowsPerPage = 10;
+			//CANTIDAD DE PAGINAS PARA LOS PRODUCTOS CARGADOS
+			$params["paginacion_listado_productos"]= (int)round($this->paginacionCargarProductos()/$rowsPerPage);
+			$params["listado_productos"]=$this->cargarProductos((int)$params["pagina_actual_listado_productos"],(int)$rowsPerPage);
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/products');
@@ -182,6 +190,14 @@ class Admin extends CI_Controller {
 		
 	}
 
+	public function cargarProductos($pageCount, $rowsPerPage){
+		return $resultado = $this->ProductoDAO->cargarProductos($pageCount, $rowsPerPage);
+	}
+
+	public function paginacionCargarProductos(){
+		return $this->ProductoDAO->paginacionCargarProductos();
+	}
+
 	/***
 	*
 	* MANEJO DE OFERTAS
@@ -230,17 +246,28 @@ class Admin extends CI_Controller {
 
 	public function users()
 	{
-		if($this->isSession())
-		{
-			$usuarios=$this->UsuarioDAO->getByRango(1);
-			$params['users']=$usuarios;
+			if($this->isSession()){
 			$params["active"]="users";
+			//SE ESTABLECE LA CANTIDAD DE USUARIOS A CARGAR EN LA TABLA
+			$pA = $this->input->get('page');
+			$params["pagina_actual_listado_usuarios"] = $pA ?? 1;
+			$rowsPerPage = 10;
+			$params["paginacion_listado_usuarios"]= (int)round($this->paginacionCargarUsuarios()/$rowsPerPage);
+			$params["listado_usuarios"] = $this->cargarUsuarios((int)$params["pagina_actual_listado_usuarios"],(int)$rowsPerPage);
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/users');
 			$this->load->view('admin/content/users_clients');
 		}
 		
+	} 
+
+	public function cargarUsuarios($pageCount, $rowsPerPage){
+		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
+	}
+
+	public function paginacionCargarUsuarios(){
+		return $this->UsuarioDAO->paginacionCargarUsuarios();
 	}
 
 	public function admins()

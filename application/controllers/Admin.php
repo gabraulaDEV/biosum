@@ -467,18 +467,41 @@ class Admin extends CI_Controller {
 
 	public function import()
 	{
-		$this->load->library("excelreader/excel");
-		if($_FILES['file']['type']=="application/vnd.ms-excel")
+		if($this->isSession())
 		{
-			$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
-		}
-		else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-		{
-			$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
-		}
-		else
-		{
-			echo "No es un excel";
+			$alert="";
+			$this->load->library("excelreader/excel");
+			if($_FILES['file']['type']=="application/vnd.ms-excel")
+			{
+				$rta=$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
+				if($rta[0])
+				{
+					$alert=$this->alertSuccess($rta[1]);
+				}
+				else
+				{
+					$alert=$this->alertError($rta[1]);
+				}
+			}
+			else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+			{
+				$rta=$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
+				if($rta[0])
+				{
+					$alert=$this->alertSuccess($rta[1]);
+				}
+				else
+				{
+					$alert=$this->alertError($rta[1]);
+				}
+			}
+			else
+			{
+				$alert=$this->alertError("Archivo no válido, parece que no es un Excel");
+			}
+			$this->products();
+			echo $alert;
+
 		}
 	}
 

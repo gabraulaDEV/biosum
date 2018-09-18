@@ -69,5 +69,24 @@ class ProductoDAO extends CI_Model
 		$resultSet = $this->db->query($query);
 		return $resultSet->row()->resultadoConteo;
 	}
+
+	public function insertProducto2($ref,$mod,$desc,$tipo,$price,$cod_cat,$image_url)
+	{
+		$success=false;
+
+		try
+		{
+			$query="INSERT INTO gb_producto(prod_referencia,prod_modelo,prod_descripcion,prod_estado,tipo_producto,image_url,precio,cod_cat) VALUES(?,?,?,?,?,?,?,?)";
+			if($this->db->query($query,array($ref,$mod,$desc,"Activo",$tipo,$image_url,$price,$cod_cat)))
+			{
+				$success=true;
+			}
+		}
+		catch(Exception $e)
+		{
+
+		}
+		return $success;
+	}
 }
 ?>

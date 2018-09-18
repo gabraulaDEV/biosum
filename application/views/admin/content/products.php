@@ -6,7 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para agregar producto -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Agregar producto</h2>
             <a href="#" style="float:left" onClick="ocultar1()">CERRAR</a>
           </div>
           <div class="content">
@@ -84,7 +83,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para importar producto -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Importar productos</h2>
             <a href="#" style="float:left" onClick="ocultar2()">CERRAR</a>
           </div>
           

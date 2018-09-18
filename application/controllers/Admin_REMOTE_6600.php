@@ -122,15 +122,6 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	public function editProduct()
-	{
-		if($this->isSession()){
-			$params["active"]="prod";
-			$this->load->view('admin/template/header');
-			$this->load->view('admin/template/sidenav',$params);
-			$this->load->view('admin/content/editProduct');
-		}
-	}
 	public function agregarProducto()
 	{
 		if($this->isSession())
@@ -204,10 +195,7 @@ class Admin extends CI_Controller {
 
 		return $this->ProductoDAO->paginacionCargarProductos();
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	/***
 	*
 	* MANEJO DE OFERTAS
@@ -215,10 +203,6 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-<<<<<<< HEAD
-
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 
 	public function offers()
 	{
@@ -249,14 +233,6 @@ class Admin extends CI_Controller {
 		}
 		
 	} 
-<<<<<<< HEAD
-
-	/**
-	* USUARIO
-	*/
-
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	/***
 	*
 	* MANEJO DE USUARIOS
@@ -264,11 +240,6 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	public function users()
 	{
 			if($this->isSession()){
@@ -282,6 +253,7 @@ class Admin extends CI_Controller {
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/users');
+			$this->load->view('admin/content/users_clients');
 		}
 		
 	} 
@@ -336,14 +308,9 @@ class Admin extends CI_Controller {
 			$this->admins();
 			echo $alert;
 		}
+
 	}
 
-
-<<<<<<< HEAD
-=======
-	}
-
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	public function cargarUsuarios($pageCount, $rowsPerPage){
 		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
 	}
@@ -353,12 +320,6 @@ class Admin extends CI_Controller {
 	}
 
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	/***
 	*
 	* CONFIGURACION CUENTA Y CONTACTO
@@ -366,10 +327,6 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-<<<<<<< HEAD
-
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	public function config()
 	{
 			if($this->isSession()){

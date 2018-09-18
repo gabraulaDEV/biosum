@@ -1,16 +1,28 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Excel
+class Excel extends CI_Model
 {
+
 	public function __construct()
 	{
+		parent::__construct();
 		require_once "Classes/PHPExcel/IOFactory.php";
 		require_once "Classes/PHPExcel/Reader/Excel2007.php";
+		//$this->CI =& get_instance();
+		$this->load->model('ProductoDAO');
+		$this->load->model('CategoriaDAO');
+		$this->load->model('ColorDAO');
 	}
 
+	/**
+	*	Importa excel .xls
+	*/
 	public function importProductsXLS($file)
 	{
+		$result="";
+		$results=[false,""];
+		$count=0;
 		try
 			{
 				$objReader = PHPExcel_IOFactory::load($file);
@@ -18,30 +30,27 @@ class Excel
 				$rows=$objReader->setActiveSheetIndex(0)->getHighestRow();
 				$objWorksheet=$objReader->getActiveSheet();
 				$highestColumn = $objReader->setActiveSheetIndex(0)->getHighestColumn();
-				echo "Número de filas ".$rows."<br/>";
 				$excelImages=$objWorksheet->getDrawingCollection();
 				$withImages=false;
 				if(count($excelImages)>0)
 				{
-					echo "Archivo con imágenes<br/>";
 					if(count($excelImages)==$rows-1)
 					{	
 						$withImages=true;
-						echo "Imágenes coinciden con el número de filas<br/>dirigirse a readExcel/images/ para verlas<br/>";
 					} 
 					else
 					{
-						echo "Número de Imágenes no coincide con el número de registros<br/>";
+						$result="Número de Imágenes no coincide con el número de registros, corrija esto en el archivo excel";
 					}
 				}
 				else
 				{
-					echo "Archivo no contiene imágenes<br/>";
+					$result="Archivo no contiene imágenes, corrija esto en el archivo excel";
 				}
 
 				if($highestColumn!='H')
 				{
-					echo "Formato inválido";
+					$result="Formato inválido, por favor revise que la estructura del archivo que está importando sea igual al ejemplo 'Ver Template'";
 				}
 				else
 				{
@@ -89,23 +98,66 @@ class Excel
 							    $extension = $excelImages[$i-2]->getExtension();
 						    }
 						    $myFileName = $_SERVER["DOCUMENT_ROOT"]."/biosum/assets/images/products/".$ref.".".$extension;
-							file_put_contents($myFileName,$imageContents);
 						}
-						$url_image=base_url()."assets/images/products/".$ref.".".$extension;
-						//AQUI DEBE IR GUARDANDOSE LA SENTENCIA INSERT
-						echo $i." REF: ".$ref." - MODELO: ".$modelo." - DEC: ".$desc." - COLOR: ".$color." - CAT: ".$cat." - TIPO: ".$tipo." - PRICE: ".$price." - URL-IMAGE: ".$url_image."<br/>";
+
+						/*Verificar que no exista el producto*/
+						if(count($this->ProductoDAO->productoProRefTipo($ref,$tipo))==0)
+						{
+							$url_image=base_url()."assets/images/products/".$ref.".".$extension;
+
+							/*Verificamos existencia de categoria*/
+							$categoria=$this->CategoriaDAO->getIdByName($cat);
+							if(count($categoria)>0)
+							{
+								/*obtenemos id categoria*/
+								$id_cat=$categoria[0]['id'];
+								//AQUI DEBE IR GUARDANDOSE LA SENTENCIA INSERT
+								if($this->ProductoDAO->insertProducto2($ref,$modelo,$desc,$tipo,$price,$id_cat,$url_image))
+								{
+									file_put_contents($myFileName,$imageContents);
+									$colores = explode(",", $color);
+									if($this->ColorDAO->insertColorProducto($ref,$modelo,$tipo,$colores))
+									{
+										$count++;
+									}
+								}
+							}
+							
+						}
+						else
+						{
+							/* POSIBLE UPDATE PRODUCT*/
+						}
+						
 					}
 				}
 				
 			}
 			catch(Exception $e) 
 			{
-				echo $e->getMessage();
+
 			}
+			if($count>0)
+			{
+				$result="Se agregaron ".$count." productos";
+				$results[0]=true;
+			}
+			else
+			{
+				$result=$result."No se agregaron prductos nuevos";
+			}
+			$results[1]=$result;
+			return $results;
 	}
 
+	/**
+	*	Importa excel .xlsx
+	*/
 	public function importProductsXLSX($file)
 	{
+		$result="";
+		$results=[false,""];
+		$count=0;
 		try
 			{
 				$objReader = PHPExcel_IOFactory::createReader('Excel2007');
@@ -119,25 +171,23 @@ class Excel
 				$withImages=false;
 				if(count($excelImages)>0)
 				{
-					echo "Archivo con imágenes<br/>";
 					if(count($excelImages)==$highestRow-1)
 					{	
 						$withImages=true;
-						echo "Imágenes coinciden con el número de filas<br/>dirigirse a readExcel/images/ para verlas<br/>";
 					} 
 					else
 					{
-						echo "Número de Imágenes no coincide con el número de registros<br/>";
+						$result="Número de Imágenes no coincide con el número de registros, corrija esto en el archivo excel";
 					}
 				}
 				else
 				{
-					echo "Archivo no contiene imágenes<br/>";
+					$result="Archivo no contiene imágenes, corrija esto en el archivo excel";
 				}
 
-				if($highestColumn!='H')
+				if($objPHPExcel->getActiveSheet()->getCell("H1")->getValue()!="Imagen" && $objPHPExcel->getActiveSheet()->getCell("H1")->getValue()!="imagen" && $objPHPExcel->getActiveSheet()->getCell("H1")->getValue()!="IMAGEN")
 				{
-					echo "Formato inválido";
+					$result=$objPHPExcel->getActiveSheet()->getCell("H1")->getCalculatedValue()."Formato inválido, por favor revise que la estructura del archivo que está importando sea igual al ejemplo 'Ver Template'";
 				}
 				else
 				{
@@ -187,21 +237,52 @@ class Excel
 							    $extension = $excelImages[$row-2]->getExtension();
 						    }
 						    $myFileName = $_SERVER["DOCUMENT_ROOT"]."/biosum/assets/images/products/".$ref.".".$extension;
-							file_put_contents($myFileName,$imageContents);
-							$url_image=base_url()."assets/images/products/".$ref.".".$extension;
+							
 							//AQUI DEBE IR GUARDANDOSE LA SENTENCIA INSERT
-							echo $row." REF: ".$ref." - MODELO: ".$modelo." - DEC: ".$desc." - COLOR: ".$color." - CAT: ".$cat." - TIPO: ".$tipo." - PRICE: ".$price." - URL-IMAGE: ".$url_image."<br/>";
-					    	echo '<br/>';
+							if(count($this->ProductoDAO->productoProRefTipo($ref,$tipo))==0)
+							{
+								$url_image=base_url()."assets/images/products/".$ref.".".$extension;
+
+								/*Verificamos existencia de categoria*/
+								$categoria=$this->CategoriaDAO->getIdByName($cat);
+								if(count($categoria)>0)
+								{
+									/*obtenemos id categoria*/
+									$id_cat=$categoria[0]['id'];
+									//AQUI DEBE IR GUARDANDOSE LA SENTENCIA INSERT
+									if($this->ProductoDAO->insertProducto2($ref,$modelo,$desc,$tipo,$price,$id_cat,$url_image))
+									{
+										file_put_contents($myFileName,$imageContents);
+										$colores = explode(",", $color);
+										if($this->ColorDAO->insertColorProducto($ref,$modelo,$tipo,$colores))
+										{
+											$count++;
+										}
+									}
+								}
+								
+							}
+
 						}
 					}
 				}
 			}
 			catch(Exception $e)
 			{
-				echo "ERROR";
+				
 			}
 
-			echo "hecho <br/>";
+			if($count>0)
+			{
+				$result="Se agregaron ".$count." productos";
+				$results[0]=true;
+			}
+			else
+			{
+				$result=$result."No se agregaron prductos nuevos";
+			}
+			$results[1]=$result;
+			return $results;
 	}
 }
 ?>

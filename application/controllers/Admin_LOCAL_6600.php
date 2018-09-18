@@ -12,7 +12,6 @@ class Admin extends CI_Controller {
 		*
 		*CARGA DE MODELOS NECESARIOS
 		*/
-		$this->load->model('ProductoDAO');
 		$this->load->model('UsuarioDAO');
 		$this->load->model('CategoriaDAO');
 		$this->load->model('ColorDAO');
@@ -99,11 +98,11 @@ class Admin extends CI_Controller {
 	public function products()
 	{
 		if($this->isSession()){
-			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO
+			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO			
 			$categorias=$this->CategoriaDAO->nombresCategorias();
 			//COLOCAMOS LAS CATEGORIAS EN PARAMS
 			$params["categorias"]=$categorias;
-			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO
+			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO			
 			$colores=$this->ColorDAO->colores();
 			//COLOCAMOS LOS COLORES EN PARAMS
 			$params['colores']=$colores;
@@ -197,17 +196,14 @@ class Admin extends CI_Controller {
 
 
 	public function cargarProductos($pageCount, $rowsPerPage){
+		$this->load->model("ProductoDAO");
 		return $resultado = $this->ProductoDAO->cargarProductos($pageCount, $rowsPerPage);
 	}
 
 	public function paginacionCargarProductos(){
-
+		$this->load->model("ProductoDAO");
 		return $this->ProductoDAO->paginacionCargarProductos();
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	/***
 	*
 	* MANEJO DE OFERTAS
@@ -215,10 +211,7 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-<<<<<<< HEAD
 
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 
 	public function offers()
 	{
@@ -249,14 +242,11 @@ class Admin extends CI_Controller {
 		}
 		
 	} 
-<<<<<<< HEAD
 
 	/**
 	* USUARIO
 	*/
 
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	/***
 	*
 	* MANEJO DE USUARIOS
@@ -264,14 +254,14 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	public function users()
 	{
-			if($this->isSession()){
+		if($this->isSession())
+		{
+			$usuarios=$this->UsuarioDAO->getByRango(1);
+			$params['users']=$usuarios;
 			$params["active"]="users";
 			//SE ESTABLECE LA CANTIDAD DE USUARIOS A CARGAR EN LA TABLA
 			$pA = $this->input->get('page');
@@ -284,7 +274,7 @@ class Admin extends CI_Controller {
 			$this->load->view('admin/content/users');
 		}
 		
-	} 
+	}
 
 	public function admins()
 	{
@@ -339,26 +329,20 @@ class Admin extends CI_Controller {
 	}
 
 
-<<<<<<< HEAD
-=======
-	}
-
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	public function cargarUsuarios($pageCount, $rowsPerPage){
+		$this->load->model("UsuarioDAO");
 		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
 	}
 
 	public function paginacionCargarUsuarios(){
+		$this->load->model("UsuarioDAO");
 		return $this->UsuarioDAO->paginacionCargarUsuarios();
 	}
 
 
-<<<<<<< HEAD
 
 
 
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	/***
 	*
 	* CONFIGURACION CUENTA Y CONTACTO
@@ -366,15 +350,11 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-<<<<<<< HEAD
 
-=======
->>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
 	public function config()
 	{
 			if($this->isSession()){
 			$params["active"]="config";
-			$params['asesores']=$this->UsuarioDAO->getByRango(2);
 			$params["gb_data"]=$this->cargarMisDatos();
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
@@ -419,81 +399,6 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	public function modificarAsesor()
-	{
-		if($this->isSession())
-		{
-			$alert="";
-			if($this->input->post('user_nom')==null || $this->input->post('user_ape')==null || $this->input->post('user_mail')==null || $this->input->post('user_phone')==null)
-			{
-				$alert=$this->alertError("Campos vacíos");
-			}
-			else if(strlen($this->input->post('user_nom'))>29 || strlen($this->input->post('user_ape'))>29)
-			{
-			  	$alert=$this->alertError("El nombre y el apellido no pueden sobre pasar los 30 carateres");
-
-			}
-			else if(strlen($this->input->post('user_phone'))>12)
-			{
-				$alert=$this->alertError("El teléfono es inválido");
-			}
-			else if(!$this->validateEmail($this->input->post('user_mail')))
-			{
-				$alert=$this->alertError("El correo '".$this->input->post('user_mail')."' es inválido");
-			}
-			else if($this->UsuarioDAO->update1($this->input->post('user_nom'),$this->input->post('user_ape'),$this->input->post('user_mail'),$this->input->post('user_phone'),$this->input->post('user_id')))
-			{
-			  	$alert=$this->alertSuccess("Cambios exitosos");				
-			}
-			else
-			{
-			  	$alert=$this->alertError("Error en cambio de datos");
-				
-			}
-			$this->config();
-			echo $alert;			
-		}
-	}
-
-	public function agregarAsesor()
-	{
-		if($this->isSession())
-		{
-			$alert="";
-			if($this->input->post('user_nom')==null || $this->input->post('user_ape')==null || $this->input->post('user_mail')==null || $this->input->post('user_phone')==null)
-			{
-				$alert=$this->alertError("Campos vacíos");
-			}
-			else if(strlen($this->input->post('user_nom'))>30 || strlen($this->input->post('user_ape'))>30)
-			{
-				$alert=$this->alertError("El nombre y el apellido no pueden sobre pasar los 29 caracteres");
-			}
-			else if(strlen($this->input->post('user_phone'))>12)
-			{
-				$alert=$this->alertError("El teléfono es inválido");
-			}
-			else if(!$this->validateEmail($this->input->post('user_mail')))
-			{
-				$alert=$this->alertError("El correo '".$this->input->post('user_mail')."' es inválido");
-			}
-			else if(count($this->UsuarioDAO->getUserByEmail($this->input->post('user_mail')))!=0)
-			{
-				$alert=$this->alertError("Ya existe el asesor con el correo '".$this->input->post('user_mail'));
-			}
-			else if($this->UsuarioDAO->insertUser($this->input->post('user_nom'), $this->input->post('user_ape'),"12345678",$this->input->post('user_mail'),"Activo",2,$this->input->post('user_phone'),"NA"))
-			{
-				$alert=$this->alertSuccess("Asesor agregado correctamnete");
-			}
-			else
-			{
-				$alert=$this->alertError("Un error ha ocurrido");
-			}
-			$this->config();
-			echo $alert;
-		}
-
-	}
-
 	/*
 	*
 	*
@@ -510,54 +415,23 @@ class Admin extends CI_Controller {
 
 	public function import()
 	{
-		if($this->isSession())
+		$this->load->library("excelreader/excel");
+		if($_FILES['file']['type']=="application/vnd.ms-excel")
 		{
-			$alert="";
-			$this->load->library("excelreader/excel");
-			if($_FILES['file']['type']=="application/vnd.ms-excel")
-			{
-				$rta=$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
-				if($rta[0])
-				{
-					$alert=$this->alertSuccess($rta[1]);
-				}
-				else
-				{
-					$alert=$this->alertError($rta[1]);
-				}
-			}
-			else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-			{
-				$rta=$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
-				if($rta[0])
-				{
-					$alert=$this->alertSuccess($rta[1]);
-				}
-				else
-				{
-					$alert=$this->alertError($rta[1]);
-				}
-			}
-			else
-			{
-				$alert=$this->alertError("Archivo no válido, parece que no es un Excel");
-			}
-			$this->products();
-			echo $alert;
-
+			$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
+		}
+		else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+		{
+			$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
+		}
+		else
+		{
+			echo "No es un excel";
 		}
 	}
-
-	/*
-	*
-	*
-	*
-	*
-	*
-	*
-	*UTILITYS
-	*/
-
+/*
+<<<<<<< HEAD
+*/
 	private function isSession(){
 		$session = false;
 		if($this->session->userdata('sessionid')==null){
@@ -573,6 +447,12 @@ class Admin extends CI_Controller {
 		$gb_data = $this->UsuarioDAO->getById($this->session->userdata('sessionid'));
 		return $gb_data;
 	}
+/*
+=======
+	
+		
+>>>>>>> 7c33ad0bda2d568822e0c51bf7223d0f58d46364
+*/
 
 	private function validateEmail($str)
 	{

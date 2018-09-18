@@ -10,46 +10,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
                 <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Cliente</h2></div>
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
+                                    <table class="table table-striped table-bordered">
                     <thead>
                       <tr>
-                        <td>Id</td>
-                        <td>Nombre</td>
+                        <td>Id.</td>
+                        <td>Primer Nombre</td>
                         <td>Apellido</td>
-                        <td>Correo</td>
-                        <td>Telefono</td>
-                        <td>Direccion</td>
+                        <td>Correo Electrónico</td>
                         <td>Estado</td>
+                        <td>Rango</td>
+                        <td>Teléfono</td>
+                        <td>Dirección</td>
+                        <td>Operaciones</td>
                       </tr>
                     </thead>
-                    <tbody>
+                     <tbody>
                       <?php
-                      if(count($users)>0)
-                      {
-                        for($i=0;$i<count($users);$i++)
+                        for($i=0;$i<count($listado_usuarios);$i++)
                         {
-                          echo "<tr>";
-                            echo "<td>".$users[$i]['id']."</td>";
-                            echo "<td>".$users[$i]['usuario_nombre']."</td>";
-                            echo "<td>".$users[$i]['usuario_apellido']."</td>";
-                            echo "<td>".$users[$i]['usuario_email']."</td>";
-                            echo "<td>".$users[$i]['usuario_telefono']."</td>";
-                            echo "<td>".$users[$i]['direccion']."</td>";
-                            echo "<td>".$users[$i]['estado']."</td>";
+                            echo "<tr>";
+                            echo "<td>".$listado_usuarios[$i]['id']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_nombre']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_apellido']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_email']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['estado']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['rango']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['usuario_telefono']."</td>";
+                            echo "<td>".$listado_usuarios[$i]['direccion']."</td>";
+                           echo "<td><input type='submit' class='templatemo-blue-button width-100' value='Operacion' /></td>";
                           echo "</tr>";
                         }
-                      }
-                      else
-                      {
-                        echo "<tr>";
-                          echo "<td colspan='7'>No hay clientes</td>";
-                        echo "</tr>";
-                      }
-
-                      ?>                                      
+                      ?>
                     </tbody>
-                  </table>    
-                </div>                          
+                  </table> 
+                </div>   
+                <center>
+              <form method="get">
+              <button type='submit' name="page" class='templatemo-blue-button width-20' value='1'>Primera</button>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value="<?php if($pagina_actual_listado_usuarios-1 > 1){ echo $pagina_actual_listado_usuarios -1; }else{ echo 1;}?>" >Anterior</button>
+               <?php echo $pagina_actual_listado_usuarios; ?>..<?php echo $paginacion_listado_usuarios; ?>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value="<?php if($pagina_actual_listado_usuarios+1 < $pagina_actual_listado_usuarios){ echo $pagina_actual_listado_usuarios +1; }else{ echo $pagina_actual_listado_usuarios;}?>" >Siguiente</button>
+              <button type='submit' name="page"  class='templatemo-blue-button width-20' value='<?php echo $pagina_actual_listado_usuarios;?>'>Última</button>
+            </form></center>                       
               </div>
             </div>           
           </div> <!-- Second row ends -->

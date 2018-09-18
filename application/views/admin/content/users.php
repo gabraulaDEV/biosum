@@ -5,11 +5,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para agregar un administrador -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Agregar administrador</h2>
             <a href="#" style="float:left" onClick="ocultarAgregarAdmin()">CERRAR</a>
           </div>
           <div class="content">
-            <h2>Agregar producto</h2>
+            <h2>Agregar administrador</h2>
             <hr/>
             <div class="div_form">
               <form id="formAdmin" method="POST" action=<?php echo base_url().index_page()."/admin/agregarAdmin ";?>>
@@ -55,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </nav> 
           </div>
         </div>
+<<<<<<< HEAD
 
         <div class="templatemo-content-container">
                     <div class="templatemo-flex-row flex-content-row templatemo-overflow-hidden"> <!-- overflow hidden for iPad mini landscape view-->
@@ -183,5 +183,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </body>
 </html>
 =======
+=======
+>>>>>>> 184dde543c26f4ddfb4382e7f37427fd5e96feee
         
->>>>>>> 763d4fc45382bf5732f696cd3117edef1abdd77a

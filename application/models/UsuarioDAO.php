@@ -127,5 +127,21 @@ class UsuarioDAO extends CI_Model{
 		return $resultSet->result_array();
 	} 
 
+	public function getAdminByEmail($email)
+	{
+		$admin=[];
+		try
+		{
+			$query="SELECT * FROM gb_usuario WHERE usuario_email = ? AND rango = ?";
+			$resultset=$this->db->query($query,array($email,3));
+			$admin=$resultset->result_array();
+		}
+		catch(Exception $e)
+		{
+
+		}
+		return $admin;
+	}
+
 }
 ?>

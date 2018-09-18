@@ -342,6 +342,10 @@ class Admin extends CI_Controller {
 			{
 				$alert=$this->alertError("Contraseñas no coinciden");
 			}
+			else if(count($this->UsuarioDAO->getAdminByEmail($this->input->post('user_mail')))>0)
+			{
+				$alert=$this->alertError("El administrador ".$this->input->post('user_mail')." ya existe");
+			}
 			else if($this->UsuarioDAO->insertUser($this->input->post('user_nom'), $this->input->post('user_ape'),$this->input->post('user_pass1'),$this->input->post('user_mail'),"Activo",3,$this->input->post('user_phone'),$this->input->post('user_dir')))
 			{
 				$alert=$this->alertSuccess("Administrador agregado correctamnete");
@@ -351,7 +355,9 @@ class Admin extends CI_Controller {
 				$alert=$this->alertError("Un error ha ocurrido");
 			}
 			$this->admins();
-			echo $alert;
+			echo $alert;			
+			//redirect(base_url().index_page()."/admin/admins",'refresh');
+			//header('Location:'.base_url().index_page().'/admin/admins');
 		}
 
 	}
@@ -587,7 +593,7 @@ class Admin extends CI_Controller {
 		$alert="";
 		$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>".$msg."</b></div>";
 		$alert=$alert."<script>";
-		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";		
 		$alert=$alert."</script>";
 		return $alert;
 	}

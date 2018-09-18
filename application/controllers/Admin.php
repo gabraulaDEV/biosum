@@ -196,6 +196,51 @@ class Admin extends CI_Controller {
 		return $this->ProductoDAO->paginacionCargarProductos();
 	}
 
+	public function editProduct()
+	{
+		if($this->isSession()){
+			//OBTENER EL ID DEL PRODUCTO A EDITAR
+			$prod_id = $this->input->get('prod_id');
+			$prod_result = $this->ProductoDAO->cargarProductoPorId($prod_id);
+
+			//SE VALIDA SI EL PRODUCTO EXISTE
+			if(($params["producto"] = $prod_result) != NULL){
+
+
+			if(($modelo_producto = $this->input->post('modelo_producto'))!=null && 
+				($referencia_producto = $this->input->post('referencia_producto'))!=null &&
+				($descripcion_producto = $this->input->post('descripcion_producto'))!=null &&
+				($descripcion_producto = $this->input->post('descripcion_producto'))!=null && 
+				($estado_producto = $this->input->post('estado_producto'))!=null &&
+				($tipo_producto = $this->input->post('tipo_producto'))!=null &&
+				($categoria_producto = $this->input->post('categoria_producto'))!=null &&
+				($precio_producto = $this->input->post('precio_producto'))!=null)
+				{
+				$this->editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto);
+				echo $this->alertSuccess("ḂSe han guardado correctamente los cambios!");
+				}
+
+			//SE ASIGNA CATEGORÍA DE SIDENAV
+			$params["active"]="prod";
+
+			//OBTENEMOS COLORES PARA CHECKBOXES DE LISTADO (Sí se trata de tinta,cartucho)
+			$params["producto_colores"] = $this->ColorDAO->colores();
+
+			//OBTENEMOS CATEGORIAS PARA SELECT
+			$params["producto_categorias"]=$this->CategoriaDAO->nombresCategorias();
+
+			//OBTENEMOS LOS COLORES QUE YA POSEE EL PRODUCTO (Sí se trata de tinta,cartucho)
+			$params["producto_colores_prod"]  = $this->ColorDAO->colores_producto($prod_id);
+
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/editProduct');
+			}else{
+			echo "* este producto no existe";
+			}
+		}
+	}
+
 	/***
 	*
 	* MANEJO DE OFERTAS

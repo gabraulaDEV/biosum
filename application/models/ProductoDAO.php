@@ -88,5 +88,17 @@ class ProductoDAO extends CI_Model
 		}
 		return $success;
 	}
+
+	public function cargarProductoPorId($id){
+		$sql = "SELECT * from gb_producto WHERE id = ?";
+		$resultSet = $this->db->query($sql,array($id));
+		return $resultSet->row();
+	
+	}
+
+	public function editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto){
+		$sql = "UPDATE gb_producto 	SET prod_referencia = ? , prod_modelo = ? , prod_descripcion = ? , prod_estado = ? , tipo_producto = ? , cod_cat = ?, precio = ? WHERE id = ?";
+		$resultSet=$this->db->query($sql,array($referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto,$prod_id));
+	}
 }
 ?>

@@ -48,5 +48,11 @@ class ColorDAO extends CI_Model
 		
 		return $success;
 	}
+
+	public function colores_producto($id){
+		$query = "SELECT * FROM gb_color_prod";
+		$resultSet = $this->db->query($query);
+		return $resultSet->result_array();
+	}
 }
 ?>

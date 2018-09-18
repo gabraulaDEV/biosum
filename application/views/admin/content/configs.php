@@ -1,6 +1,38 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
+      <div class="contenido_sobrepuesto" id="cont_sobre_asesor">
+        <!-- Contenido para agregar un administrador -->
+        <div class="agregar_producto">
+          <div class="top">
+            <a href="#" style="float:left" onClick="ocultarAgregarAsesor()">CERRAR</a>
+          </div>
+          <div class="content">
+            <h2>Agregar asesor</h2>
+            <hr/>
+            <div class="div_form">
+              <form id="formAdmin" method="POST" action=<?php echo base_url().index_page()."/admin/agregarAsesor ";?>>
+
+                <label for="user_nom">Nombres:</label>
+                <input type="text" id="user_nom" name="user_nom" placeholder="Nombres..." required="true">
+
+                <label for="user_ape">Apellidos:</label>
+                <input type="text" id="user_ape" name="user_ape" placeholder="Apellidos..." required="true">
+
+                <label for="user_mail">Correo:</label>
+                <input type="text" id="user_mail" name="user_mail" placeholder="Correo..." required="true">
+
+                <label for="user_phone">Teléfono:</label>
+                <input type="text" id="user_phone" name="user_phone" placeholder="Teléfono..." required="true">
+
+                <input type="submit" id="bRegister" value="Agregar">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Main content --> 
       <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-top-nav-container">
@@ -59,47 +91,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div id="contacto" style="visibility: hidden; display: none;">
             <h2>Contacto</h2>
             <hr/>
-            <h3 style="margin-top: 30px;">Contacto asesor 1</h3>
-            <hr/>
-            <link href=<?php echo base_url()."assets/admin/css/contenido-sobrepuesto.css"; ?> rel="stylesheet">
-            <div class="div_form">
-               <form id="form1" method="POST" action="">
-                <label for="user_nom">Nombres:</label>
-                <input type="text" id="user_nom" name="user_nom" placeholder="Nombres..." value=<?php echo $gb_data['gb_nombre']." "; ?> required="true">
-
-                <label for="user_ape">Apellidos:</label>
-                <input type="text" id="user_ape" name="user_ape" placeholder="Apellidos..." value=<?php echo $gb_data['gb_apellido']." "; ?> required="true">
-
-                <label for="user_mail">Correo:</label>
-                <input type="text" id="user_mail" name="user_mail" placeholder="Correo..." value=<?php echo $gb_data['gb_email']." "; ?> required="true">
-
-                <label for="user_phone">Teléfono:</label>
-                <input type="text" id="user_phone" name="user_phone" placeholder="Teléfono..." value=<?php echo $gb_data['gb_usuario_telefono']." "; ?> required="true">              
-
-                <input type="submit" id="bModify" value="Guardar cambios"> 
+              <form class=div_form action="#">
+                <h4>Agregar nuevo asesor</h4>
+                <input style="width: 200px;" type='submit' onClick="mostrarAgregarAsesor()" value='Agregar' />
               </form>
-            </div>
-
-            <h3 style="margin-top: 30px;">Contacto asesor 2</h3>
             <hr/>
-            <link href=<?php echo base_url()."assets/admin/css/contenido-sobrepuesto.css"; ?> rel="stylesheet">
-            <div class="div_form">
-               <form id="form1" method="POST" action="">
-                <label for="user_nom">Nombres:</label>
-                <input type="text" id="user_nom" name="user_nom" placeholder="Nombres..." value=<?php echo $gb_data['gb_nombre']." "; ?> required="true">
 
-                <label for="user_ape">Apellidos:</label>
-                <input type="text" id="user_ape" name="user_ape" placeholder="Apellidos..." value=<?php echo $gb_data['gb_apellido']." "; ?> required="true">
+            <?php
+            if(count($asesores)>0)
+            {
+              for($i=0;$i<count($asesores);$i++)
+              {
+                echo "<h3 style='margin-top: 30px;'>Contacto asesor ".($i+1)."</h3>";
+                echo "<hr/>";
+                echo "<div class='div_form'>";
+                  echo "<form id='form1' method='POST' action='".base_url().index_page()."/admin/modificarAsesor'".">";
+                    echo "<input style='visibility:hidden;display:none;' type='text' id='user_id' name='user_id' placeholder='id...'' value='".$asesores[$i]['id']."' required='true'>";
 
-                <label for="user_mail">Correo:</label>
-                <input type="text" id="user_mail" name="user_mail" placeholder="Correo..." value=<?php echo $gb_data['gb_email']." "; ?> required="true">
+                    echo "<label for='user_nom'>Nombres:</label>";
+                    echo "<input type='text' id='user_nom' name='user_nom' placeholder='Nombres...'' value='".$asesores[$i]['usuario_nombre']."' required='true'>";
 
-                <label for="user_phone">Teléfono:</label>
-                <input type="text" id="user_phone" name="user_phone" placeholder="Teléfono..." value=<?php echo $gb_data['gb_usuario_telefono']." "; ?> required="true">              
+                    echo "<label for='user_ape'>Apellidos:</label>";
+                    echo "<input type='text' id='user_ape' name='user_ape' placeholder='Apellidos...'' value='".$asesores[$i]['usuario_apellido']."' required='true'>";
 
-                <input type="submit" id="bModify" value="Guardar cambios"> 
-              </form>
-            </div>
+                    echo "<label for='user_mail'>Correo:</label>";
+                    echo "<input type='text' id='user_mail' name='user_mail' placeholder='Correo...'' value='".$asesores[$i]['usuario_email']."' required='true'>";
+
+                    echo "<label for='user_phone'>Teléfono:</label>";
+                    echo "<input type='text' id='user_phone' name='user_phone' placeholder='Teléfono...'' value='".$asesores[$i]['usuario_telefono']."' required='true'>";
+
+                    echo "<input type='submit' id='bModify' value='Guardar cambios'>";
+                  echo " </form>";
+                echo "</div>";
+
+              }
+            }
+            else
+            {
+              echo "<h3 style='margin-top: 30px;'>Contacto asesores</h3>";
+              echo "<hr/>";
+              echo "No hay asesores registrados";
+            }
+            ?>
+
           </div>
           
          

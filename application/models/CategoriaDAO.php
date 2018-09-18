@@ -14,5 +14,12 @@ class CategoriaDAO extends CI_Model
 		$resultset=$this->db->query($query);
 		return $resultset->result_array();
 	}
+
+	public function getIdByName($name)
+	{
+		$query="SELECT id FROM gb_categoria WHERE nom_categoria = ?";
+		$resultset=$this->db->query($query,array($name));
+		return $resultset->result_array();
+	}
 }
 ?>

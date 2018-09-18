@@ -13,3 +13,14 @@ function verContacto()
 	document.getElementById("contacto").style.visibility="visible";
 	document.getElementById("contacto").style.display="block";
 }
+
+function mostrarAgregarAsesor()
+{
+	document.getElementById("cont_sobre_asesor").style.visibility="visible";
+	document.getElementById("cont_sobre_asesor").style.display="block";
+}
+function ocultarAgregarAsesor()
+{
+	document.getElementById("cont_sobre_asesor").style.visibility="hidden";
+	document.getElementById("cont_sobre_asesor").style.display="none";
+}

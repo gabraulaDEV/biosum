@@ -20,6 +20,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href=<?php echo base_url()."assets/admin/css/font-awesome.min.css"; ?> rel="stylesheet">
     <link href=<?php echo base_url()."assets/admin/css/bootstrap.min.css"; ?> rel="stylesheet">
     <link href=<?php echo base_url()."assets/admin/css/dashboard-style.css"; ?> rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

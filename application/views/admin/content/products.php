@@ -6,7 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para agregar producto -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Agregar producto</h2>
             <a href="#" style="float:left" onClick="ocultar1()">CERRAR</a>
           </div>
           <div class="content">
@@ -84,7 +83,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Contenido para importar producto -->
         <div class="agregar_producto">
           <div class="top">
-                <h2 style="float:right">Importar productos</h2>
             <a href="#" style="float:left" onClick="ocultar2()">CERRAR</a>
           </div>
           
@@ -125,20 +123,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="templatemo-content-container">
           <div class="templatemo-flex-row flex-content-row">
             <div class="col-1">
-              <h4>Modificar productos</h4>
-              <hr/>
               <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
                 <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Productos</h2></div>
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered">
                     <thead>
                       <tr>
-                        <td>ID</td>
+                        <td>Imagen</td>
                         <td>Referencia</td>
                         <td>Modelo</td>
                         <td>Categoría</td>
+                        <td>Unidades</td>
                         <td>Tipo</td>
-                        <td>Color</td>
                         <td>Descripción</td>
                         <td>Acción</td>
                       </tr>
@@ -148,7 +144,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         for($i=0;$i<count($listado_productos);$i++)
                         {
                             echo "<tr>";
-                            echo "<td>".$listado_productos[$i]['id']."</td>";
+                            echo "<td><img width='100px' height='100px' src='".$listado_productos[$i]['image_url']."'/></td>";
                             echo "<td>".$listado_productos[$i]['prod_referencia']."</td>";
                             echo "<td>".$listado_productos[$i]['prod_modelo']."</td>";
                         
@@ -161,12 +157,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         }
                         ?>
                         <?php
+                            echo "<td>5</td>";
                             echo "<td>".$listado_productos[$i]['tipo_producto']."</td>";
-                            echo "<td>Cyan</td>";
-                            echo "<td>Compatible con impresoras EPSON XR/HP XRS</td>";
-  
-                            echo "<td><input type='submit' class='templatemo-blue-button width-100' value='Editar' /></td>";
-                          echo "</tr>";
+                            echo "<td>".$listado_productos[$i]['prod_descripcion']."</td>";
+                        ?>
+                            <td><button  onclick="location.href='./editProduct?prod_id=<?php echo $listado_productos[$i]['id']; ?> ';" class='templatemo-blue-button width-100' >Editar</button>
+                            <hr>
+                              <input type='submit' class='templatemo-blue-button width-100' value='Vista rápida' />
+
+                        <?php
                         }
                       ?>
                     </tbody>

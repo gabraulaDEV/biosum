@@ -69,5 +69,36 @@ class ProductoDAO extends CI_Model
 		$resultSet = $this->db->query($query);
 		return $resultSet->row()->resultadoConteo;
 	}
+
+	public function insertProducto2($ref,$mod,$desc,$tipo,$price,$cod_cat,$image_url)
+	{
+		$success=false;
+
+		try
+		{
+			$query="INSERT INTO gb_producto(prod_referencia,prod_modelo,prod_descripcion,prod_estado,tipo_producto,image_url,precio,cod_cat) VALUES(?,?,?,?,?,?,?,?)";
+			if($this->db->query($query,array($ref,$mod,$desc,"Activo",$tipo,$image_url,$price,$cod_cat)))
+			{
+				$success=true;
+			}
+		}
+		catch(Exception $e)
+		{
+
+		}
+		return $success;
+	}
+
+	public function cargarProductoPorId($id){
+		$sql = "SELECT * from gb_producto WHERE id = ?";
+		$resultSet = $this->db->query($sql,array($id));
+		return $resultSet->row();
+	
+	}
+
+	public function editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto){
+		$sql = "UPDATE gb_producto 	SET prod_referencia = ? , prod_modelo = ? , prod_descripcion = ? , prod_estado = ? , tipo_producto = ? , cod_cat = ?, precio = ? WHERE id = ?";
+		$resultSet=$this->db->query($sql,array($referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto,$prod_id));
+	}
 }
 ?>

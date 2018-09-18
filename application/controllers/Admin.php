@@ -12,6 +12,7 @@ class Admin extends CI_Controller {
 		*
 		*CARGA DE MODELOS NECESARIOS
 		*/
+		$this->load->model('ProductoDAO');
 		$this->load->model('UsuarioDAO');
 		$this->load->model('CategoriaDAO');
 		$this->load->model('ColorDAO');
@@ -98,11 +99,11 @@ class Admin extends CI_Controller {
 	public function products()
 	{
 		if($this->isSession()){
-			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO			
+			//OBTENEMOS CATEGORIAS PARA SELECT DE AGREGAR PRODUCTO
 			$categorias=$this->CategoriaDAO->nombresCategorias();
 			//COLOCAMOS LAS CATEGORIAS EN PARAMS
 			$params["categorias"]=$categorias;
-			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO			
+			//OBTENEMOS COLORES PARA CHECKBOXES DE AGREGAR PRODUCTO
 			$colores=$this->ColorDAO->colores();
 			//COLOCAMOS LOS COLORES EN PARAMS
 			$params['colores']=$colores;
@@ -121,15 +122,6 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	public function editProduct()
-	{
-		if($this->isSession()){
-			$params["active"]="prod";
-			$this->load->view('admin/template/header');
-			$this->load->view('admin/template/sidenav',$params);
-			$this->load->view('admin/content/editProduct');
-		}
-	}
 	public function agregarProducto()
 	{
 		if($this->isSession())
@@ -196,14 +188,59 @@ class Admin extends CI_Controller {
 
 
 	public function cargarProductos($pageCount, $rowsPerPage){
-		$this->load->model("ProductoDAO");
 		return $resultado = $this->ProductoDAO->cargarProductos($pageCount, $rowsPerPage);
 	}
 
 	public function paginacionCargarProductos(){
-		$this->load->model("ProductoDAO");
+
 		return $this->ProductoDAO->paginacionCargarProductos();
 	}
+
+	public function editProduct()
+	{
+		if($this->isSession()){
+			//OBTENER EL ID DEL PRODUCTO A EDITAR
+			$prod_id = $this->input->get('prod_id');
+			$prod_result = $this->ProductoDAO->cargarProductoPorId($prod_id);
+
+			//SE VALIDA SI EL PRODUCTO EXISTE
+			if(($params["producto"] = $prod_result) != NULL){
+
+
+			if(($modelo_producto = $this->input->post('modelo_producto'))!=null && 
+				($referencia_producto = $this->input->post('referencia_producto'))!=null &&
+				($descripcion_producto = $this->input->post('descripcion_producto'))!=null &&
+				($descripcion_producto = $this->input->post('descripcion_producto'))!=null && 
+				($estado_producto = $this->input->post('estado_producto'))!=null &&
+				($tipo_producto = $this->input->post('tipo_producto'))!=null &&
+				($categoria_producto = $this->input->post('categoria_producto'))!=null &&
+				($precio_producto = $this->input->post('precio_producto'))!=null)
+				{
+				$this->editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto);
+				echo $this->alertSuccess("ḂSe han guardado correctamente los cambios!");
+				}
+
+			//SE ASIGNA CATEGORÍA DE SIDENAV
+			$params["active"]="prod";
+
+			//OBTENEMOS COLORES PARA CHECKBOXES DE LISTADO (Sí se trata de tinta,cartucho)
+			$params["producto_colores"] = $this->ColorDAO->colores();
+
+			//OBTENEMOS CATEGORIAS PARA SELECT
+			$params["producto_categorias"]=$this->CategoriaDAO->nombresCategorias();
+
+			//OBTENEMOS LOS COLORES QUE YA POSEE EL PRODUCTO (Sí se trata de tinta,cartucho)
+			$params["producto_colores_prod"]  = $this->ColorDAO->colores_producto($prod_id);
+
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/editProduct');
+			}else{
+			echo "* este producto no existe";
+			}
+		}
+	}
+
 	/***
 	*
 	* MANEJO DE OFERTAS
@@ -211,7 +248,6 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-
 
 	public function offers()
 	{
@@ -242,11 +278,6 @@ class Admin extends CI_Controller {
 		}
 		
 	} 
-
-	/**
-	* USUARIO
-	*/
-
 	/***
 	*
 	* MANEJO DE USUARIOS
@@ -254,14 +285,9 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-
-
 	public function users()
 	{
-		if($this->isSession())
-		{
-			$usuarios=$this->UsuarioDAO->getByRango(1);
-			$params['users']=$usuarios;
+			if($this->isSession()){
 			$params["active"]="users";
 			//SE ESTABLECE LA CANTIDAD DE USUARIOS A CARGAR EN LA TABLA
 			$pA = $this->input->get('page');
@@ -272,9 +298,10 @@ class Admin extends CI_Controller {
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/users');
+			$this->load->view('admin/content/users_clients');
 		}
 		
-	}
+	} 
 
 	public function admins()
 	{
@@ -326,21 +353,16 @@ class Admin extends CI_Controller {
 			$this->admins();
 			echo $alert;
 		}
+
 	}
 
-
 	public function cargarUsuarios($pageCount, $rowsPerPage){
-		$this->load->model("UsuarioDAO");
 		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
 	}
 
 	public function paginacionCargarUsuarios(){
-		$this->load->model("UsuarioDAO");
 		return $this->UsuarioDAO->paginacionCargarUsuarios();
 	}
-
-
-
 
 
 	/***
@@ -350,11 +372,11 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
-
 	public function config()
 	{
 			if($this->isSession()){
 			$params["active"]="config";
+			$params['asesores']=$this->UsuarioDAO->getByRango(2);
 			$params["gb_data"]=$this->cargarMisDatos();
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
@@ -399,6 +421,81 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	public function modificarAsesor()
+	{
+		if($this->isSession())
+		{
+			$alert="";
+			if($this->input->post('user_nom')==null || $this->input->post('user_ape')==null || $this->input->post('user_mail')==null || $this->input->post('user_phone')==null)
+			{
+				$alert=$this->alertError("Campos vacíos");
+			}
+			else if(strlen($this->input->post('user_nom'))>29 || strlen($this->input->post('user_ape'))>29)
+			{
+			  	$alert=$this->alertError("El nombre y el apellido no pueden sobre pasar los 30 carateres");
+
+			}
+			else if(strlen($this->input->post('user_phone'))>12)
+			{
+				$alert=$this->alertError("El teléfono es inválido");
+			}
+			else if(!$this->validateEmail($this->input->post('user_mail')))
+			{
+				$alert=$this->alertError("El correo '".$this->input->post('user_mail')."' es inválido");
+			}
+			else if($this->UsuarioDAO->update1($this->input->post('user_nom'),$this->input->post('user_ape'),$this->input->post('user_mail'),$this->input->post('user_phone'),$this->input->post('user_id')))
+			{
+			  	$alert=$this->alertSuccess("Cambios exitosos");				
+			}
+			else
+			{
+			  	$alert=$this->alertError("Error en cambio de datos");
+				
+			}
+			$this->config();
+			echo $alert;			
+		}
+	}
+
+	public function agregarAsesor()
+	{
+		if($this->isSession())
+		{
+			$alert="";
+			if($this->input->post('user_nom')==null || $this->input->post('user_ape')==null || $this->input->post('user_mail')==null || $this->input->post('user_phone')==null)
+			{
+				$alert=$this->alertError("Campos vacíos");
+			}
+			else if(strlen($this->input->post('user_nom'))>30 || strlen($this->input->post('user_ape'))>30)
+			{
+				$alert=$this->alertError("El nombre y el apellido no pueden sobre pasar los 29 caracteres");
+			}
+			else if(strlen($this->input->post('user_phone'))>12)
+			{
+				$alert=$this->alertError("El teléfono es inválido");
+			}
+			else if(!$this->validateEmail($this->input->post('user_mail')))
+			{
+				$alert=$this->alertError("El correo '".$this->input->post('user_mail')."' es inválido");
+			}
+			else if(count($this->UsuarioDAO->getUserByEmail($this->input->post('user_mail')))!=0)
+			{
+				$alert=$this->alertError("Ya existe el asesor con el correo '".$this->input->post('user_mail'));
+			}
+			else if($this->UsuarioDAO->insertUser($this->input->post('user_nom'), $this->input->post('user_ape'),"12345678",$this->input->post('user_mail'),"Activo",2,$this->input->post('user_phone'),"NA"))
+			{
+				$alert=$this->alertSuccess("Asesor agregado correctamnete");
+			}
+			else
+			{
+				$alert=$this->alertError("Un error ha ocurrido");
+			}
+			$this->config();
+			echo $alert;
+		}
+
+	}
+
 	/*
 	*
 	*
@@ -415,23 +512,54 @@ class Admin extends CI_Controller {
 
 	public function import()
 	{
-		$this->load->library("excelreader/excel");
-		if($_FILES['file']['type']=="application/vnd.ms-excel")
+		if($this->isSession())
 		{
-			$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
-		}
-		else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-		{
-			$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
-		}
-		else
-		{
-			echo "No es un excel";
+			$alert="";
+			$this->load->library("excelreader/excel");
+			if($_FILES['file']['type']=="application/vnd.ms-excel")
+			{
+				$rta=$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
+				if($rta[0])
+				{
+					$alert=$this->alertSuccess($rta[1]);
+				}
+				else
+				{
+					$alert=$this->alertError($rta[1]);
+				}
+			}
+			else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+			{
+				$rta=$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
+				if($rta[0])
+				{
+					$alert=$this->alertSuccess($rta[1]);
+				}
+				else
+				{
+					$alert=$this->alertError($rta[1]);
+				}
+			}
+			else
+			{
+				$alert=$this->alertError("Archivo no válido, parece que no es un Excel");
+			}
+			$this->products();
+			echo $alert;
+
 		}
 	}
-/*
-<<<<<<< HEAD
-*/
+
+	/*
+	*
+	*
+	*
+	*
+	*
+	*
+	*UTILITYS
+	*/
+
 	private function isSession(){
 		$session = false;
 		if($this->session->userdata('sessionid')==null){
@@ -447,12 +575,6 @@ class Admin extends CI_Controller {
 		$gb_data = $this->UsuarioDAO->getById($this->session->userdata('sessionid'));
 		return $gb_data;
 	}
-/*
-=======
-	
-		
->>>>>>> 7c33ad0bda2d568822e0c51bf7223d0f58d46364
-*/
 
 	private function validateEmail($str)
 	{

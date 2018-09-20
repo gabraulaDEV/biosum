@@ -52,7 +52,7 @@ $config['index_page'] = 'index.php';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
-$config['uri_protocol']	= 'REQUEST_URI';
+$config['uri_protocol']	= 'AUTO';
 
 /*
 |--------------------------------------------------------------------------
@@ -526,3 +526,4 @@ $config['proxy_ips'] = '';
 |Seguridad bajo los parámetros de llave privada
 */
 $config['private_key'] = "qwrqwr25q25q25q25h235h125"; 
+

@@ -7,7 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href="#">Agregar Ofertas</a></li>
+                <li><a href= "#">Editar Ofertas</a></li>
+                <li><a href= <?php echo base_url().index_page()."/adminPanel/ofertas/agregar "; ?> >Agregar Ofertas</a></li>
               </ul>  
             </nav> 
           </div>
@@ -17,52 +18,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <hr/>
           <div class="templatemo-flex-row flex-content-row">
             <div class="col-1">
-              <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+              <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden" style="padding: 20px 20px;">
                 <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Ofertas</h2></div>
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered">
                     <thead>
                       <tr>
-                        <td>No.</td>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Username</td>
+                        <td>Código</td>
+                        <td>Procentaje</td>
+                        <td>Acción</td>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1.</td>
-                        <td>John</td>
-                        <td>Smith</td>
-                        <td>@jS</td>
-                      </tr>
-                      <tr>
-                        <td>2.</td>
-                        <td>Bill</td>
-                        <td>Jones</td>
-                        <td>@bJ</td>
-                      </tr>
-                      <tr>
-                        <td>3.</td>
-                        <td>Mary</td>
-                        <td>James</td>
-                        <td>@mJ</td>
-                      </tr>
-                      <tr>
-                        <td>4.</td>
-                        <td>Steve</td>
-                        <td>Bride</td>
-                        <td>@sB</td>
-                      </tr>
-                      <tr>
-                        <td>5.</td>
-                        <td>Paul</td>
-                        <td>Richard</td>
-                        <td>@pR</td>
-                      </tr>                    
+                      <?php
+                        if(count($offers)>0)
+                        {
+                          for($i=0;$i<count($offers);$i++)
+                          {
+                            echo "<tr>";
+                              echo "<td>".$offers[$i]['id']."</td>";
+                              echo "<td>".$offers[$i]['porcentaje']."</td>";
+                              echo "<td>";
+                      ?>
+                              <button  onclick="location.href='./ofertas/editar?id_off=<?php echo $offers[$i]['id']; ?> ';" class='templatemo-blue-button width-100' >Editar</button>
+                              <hr>
+                             <button  onclick="location.href='./ofertas/eliminar?id_off=<?php echo $offers[$i]['id']; ?> ';" class='templatemo-blue-button width-100' >Eliminar</button></td>
+                      <?php
+                            echo "</tr>";
+                          }
+                          
+                        }
+                        else
+                        {
+                          echo "<tr>";
+                            echo "<td colspan='3' >No hay ofertas</td>";
+                          echo "</tr>";
+                        }
+                      ?>
+                 
                     </tbody>
-                  </table>    
-                </div>                          
+                  </table>
+                </div>                       
               </div>
             </div>           
           </div> <!-- Second row ends -->

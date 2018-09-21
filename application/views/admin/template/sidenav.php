@@ -28,13 +28,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <i class="fa fa-bars"></i>
         </div>
         <nav class="templatemo-left-nav">  
-			 <!--Font awesome icons fa fa-home fa-fw at https://fontawesome.com/v4.7.0/icons/-->        
+       <!--Font awesome icons fa fa-home fa-fw at https://fontawesome.com/v4.7.0/icons/-->        
           <ul>
-            <li><a href= <?php echo base_url().index_page()."/admin/welcome "; if($active=='welcome'){echo "class='active'";}?> ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
-            <li><a href= <?php echo base_url().index_page()."/admin/products "; if($active=='prod'){echo "class='active'";}?> ><i class="fa fa-suitcase fa-fw"></i>Productos</a></li>
-				    <li><a href=<?php echo base_url().index_page()."/admin/offers "; if($active=='off'){echo "class='active'";}?>><i class="fa fa-tags fa-fw"></i>Ofertas</a></li>
-				    <li><a href=<?php echo base_url().index_page()."/admin/sales "; if($active=='sales'){echo "class='active'";}?>><i class="fa fa-money fa-fw"></i>Ventas</a></li>
-            <li><a href=<?php echo base_url().index_page()."/admin/users "; if($active=='users'){echo "class='active'";}?>><i class="fa fa-users fa-fw"></i>Usuarios</a></li>
+            <li><a href= <?php echo base_url().index_page()."/adminPanel/home "; if($active=='welcome'){echo "class='active'";}?> ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+            <li><a href= <?php echo base_url().index_page()."/adminPanel/productos "; if($active=='prod'){echo "class='active'";}?> ><i class="fa fa-suitcase fa-fw"></i>Productos</a></li>
+            <li><a href=<?php echo base_url().index_page()."/adminPanel/ofertas "; if($active=='off'){echo "class='active'";}?>><i class="fa fa-tags fa-fw"></i>Ofertas</a></li>
+            <li><a href=<?php echo base_url().index_page()."/admin/sales "; if($active=='sales'){echo "class='active'";}?>><i class="fa fa-money fa-fw"></i>Ventas</a></li>
+            <li><a href=<?php echo base_url().index_page()."/adminPanel/usuarios "; if($active=='users'){echo "class='active'";}?>><i class="fa fa-users fa-fw"></i>Usuarios</a></li>
             <li><a href=<?php echo base_url().index_page()."/admin/config "; if($active=='config'){echo "class='active'";}?>><i class="fa fa-sliders fa-fw"></i>Cuenta</a></li>
             <li><a href=<?php echo base_url().index_page()."/admin/logout "; ?> ><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
           </ul>  

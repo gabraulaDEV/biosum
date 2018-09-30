@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class productos extends CI_Controller {
+class Productos extends CI_Controller {
 
 	public function __construct()
 	{
@@ -164,6 +164,11 @@ class productos extends CI_Controller {
 		}
 	}
 
+		public function editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto)
+	{
+		$this->ProductoDAO->editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto);
+	}
+
 
 	private function isSession(){
 		$session = false;
@@ -174,6 +179,26 @@ class productos extends CI_Controller {
 		}
 
 		return $session;
+	}
+
+		private function alertError($msg)
+	{
+		$alert="";
+		$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>".$msg."</b></div>";
+		$alert=$alert."<script>";
+		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";		
+		$alert=$alert."</script>";
+		return $alert;
+	}
+
+	private function alertSuccess($msg)
+	{
+		$alert="";
+		$alert=$alert."<div id='alert1' onClick='exit()' class='alert_success'><b>".$msg."</b></div>";
+		$alert=$alert."<script>";
+		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+		$alert=$alert."</script>";
+		return $alert;
 	}
 
 }

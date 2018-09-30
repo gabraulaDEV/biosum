@@ -91,7 +91,7 @@ input[type=radio], input[type=checkbox]
         <div class="Product_Content tab-content">
 
           <div id="Product_main" class="tab-pane active">
-            <form class="form-horizontal" action='<?php echo base_url().index_page()."/admin/editProduct";?>?prod_id=<?php echo $producto->id; ?>' method="POST">
+            <form class="form-horizontal" action='<?php echo base_url().index_page()."/adminPanel/productos/editProduct";?>?prod_id=<?php echo $producto->id; ?>' method="POST">
 
               <fieldset style="width: 100%">
                 <div class="col-lg-12 form-group margin50">

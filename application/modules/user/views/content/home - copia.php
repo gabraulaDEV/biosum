@@ -11,7 +11,7 @@
                 <div class="carousel-content">
                   <div class="padding-2x">
                     <div class="s-12 m-12 l-8">
-                      <p class="text-white text-s-size-20 text-m-size-40 text-l-size-60 margin-bottom-40 text-thin text-line-height-1">Prospera is the New Amazing HTML5 Template</p>
+                      <p class="text-white text-s-size-20 text-m-size-40 text-l-size-60 margin-bottom-40 text-thin text-line-height-1">dsrospera is the New Amazing HTML5 Template</p>
                       <p class="text-white text-size-16 margin-bottom-40">Duis autem vel eum iriure dolor in hendrerit in vulputate velit<br> esse molestie consequat, vel illum dolore eu feugiat nulla facilisis</p>  
                     </div>                  
                   </div>

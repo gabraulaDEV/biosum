@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <h2>Agregar administrador</h2>
             <hr/>
             <div class="div_form">
-              <form id="formAdmin" method="POST" action=<?php echo base_url().index_page()."/admin/agregarAdmin ";?>>
+              <form id="formAdmin" method="POST" action=<?php echo base_url().index_page()."/adminPanel/usuarios/agregarAdmin ";?>>
 
                 <label for="user_nom">Nombres:</label>
                 <input type="text" id="user_nom" name="user_nom" placeholder="Nombres..." required="true">
@@ -48,8 +48,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href=<?php echo base_url().index_page()."/admin/users "; ?>>Nuestros clientes</a></li>
-                <li><a href=<?php echo base_url().index_page()."/admin/admins "; ?>>Administradores</a></li>
+                <li><a href=<?php echo base_url().index_page()."/adminPanel/usuarios "; ?>>Nuestros clientes</a></li>
+                <li><a href=<?php echo base_url().index_page()."/adminPanel/usuarios/admins "; ?>>Administradores</a></li>
               </ul>  
             </nav> 
           </div>

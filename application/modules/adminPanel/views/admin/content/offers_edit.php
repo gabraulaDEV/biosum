@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
         </div>
         <div class="templatemo-content-container">
-          <h2>Agregar oferta</h2>
+          <h2>Editar oferta</h2>
           <hr/>
           <div class="templatemo-flex-row flex-content-row">
             <div class="col-1">

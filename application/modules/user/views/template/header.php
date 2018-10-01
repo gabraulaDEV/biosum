@@ -3,24 +3,27 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prospera Free - New Amazing HTML5 Template</title>
+    <title>Gsbraula shop</title>
     <link rel="shortcut icon" type="image/x-icon" href=<?php echo base_url()."assets/images/icon.ico"; ?> />
-    <link rel="stylesheet" href=<?php echo base_url()."assets/css/components.css";?>>
-    <link rel="stylesheet" href="<?php echo asset_url();?>/css/icons.css">
-    <link rel="stylesheet" href="<?php echo asset_url();?>/css/responsee.css">
-    <link rel="stylesheet" href="<?php echo asset_url();?>/owl-carousel/owl.carousel.css">
-    <link rel="stylesheet" href="<?php echo asset_url();?>/owl-carousel/owl.theme.css">
+    <link rel="stylesheet" href=<?php echo base_url()."assets/user/css/components.css";?>>
+    <link rel="stylesheet" href="<?php echo asset_url_home();?>/css/icons.css">
+    <link rel="stylesheet" href="<?php echo asset_url_home();?>/css/responsee.css">
+    <link rel="stylesheet" href="<?php echo asset_url_home();?>/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="<?php echo asset_url_home();?>/owl-carousel/owl.theme.css">
     <!-- CUSTOM STYLE -->
-    <link rel="stylesheet" href="<?php echo asset_url();?>/css/template-style.css">
+    <link rel="stylesheet" href="<?php echo asset_url_home();?>/css/template-style.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-ui.min.js"></script>    
-    <script type="text/javascript" src="<?php echo asset_url();?>/js/validation.js"></script> 
+    <script type="text/javascript" src="<?php echo asset_url_home();?>/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="<?php echo asset_url_home();?>/js/jquery-ui.min.js"></script>    
+    <script type="text/javascript" src="<?php echo asset_url_home();?>/js/validation.js"></script> 
+    <link href="<?php echo asset_url_home();?>/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="<?php echo asset_url_home();?>/js/bootstrap.min.js"></script>
+
   </head>  
   
   <body class="size-1140">
   	<!-- PREMIUM FEATURES BUTTON -->
-  	<a target="_blank" class="hide-s" href="../template/prospera-premium-responsive-business-template/" style="position:fixed;top:120px;right:-14px;z-index:10;"><img src="<?php echo asset_url();?>/img/premium-features.png" alt=""></a>
+  	<a target="_blank" class="hide-s" href="../template/prospera-premium-responsive-business-template/" style="position:fixed;top:120px;right:-14px;z-index:10;"><img src="<?php echo asset_url_home();?>/img/premium-features.png" alt=""></a>
     <!-- HEADER -->
     <header role="banner">    
       <!-- Top Bar -->
@@ -48,7 +51,7 @@
       <nav class="background-white background-primary-hightlight">
         <div class="line">
           <div class="s-12 l-2">
-            <a href="index.html" class="logo"><img src="<?php echo asset_url();?>img/logo-free.png" alt=""></a>
+            <a href="index.html" class="logo"><img src="<?php echo asset_url();?>images/logo.png" alt=""></a>
           </div>
           <div class="top-nav s-12 l-10">
             <p class="nav-text"></p>

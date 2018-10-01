@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <h2>Agregar asesor</h2>
             <hr/>
             <div class="div_form">
-              <form id="formAdmin" method="POST" action=<?php echo base_url().index_page()."/admin/agregarAsesor ";?>>
+              <form id="formAdmin" method="POST" action=<?php echo base_url().index_page()."/adminPanel/configuracion/agregarAsesor ";?>>
 
                 <label for="user_nom">Nombres:</label>
                 <input type="text" id="user_nom" name="user_nom" placeholder="Nombres..." required="true">
@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <hr/>
             <link href=<?php echo base_url()."assets/admin/css/contenido-sobrepuesto.css"; ?> rel="stylesheet">
             <div class="div_form">
-               <form id="form1" method="POST" action=<?php echo base_url().index_page()."/admin/updateactual ";?> >
+               <form id="form1" method="POST" action=<?php echo base_url().index_page()."/adminPanel/configuracion/updateactual ";?> >
                 <label for="user_nom">Nombres:</label>
                 <input type="text" id="user_nom" name="user_nom" placeholder="Nombres..." value=<?php echo $gb_data['gb_nombre']." "; ?> required="true">
 
@@ -105,7 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 echo "<h3 style='margin-top: 30px;'>Contacto asesor ".($i+1)."</h3>";
                 echo "<hr/>";
                 echo "<div class='div_form'>";
-                  echo "<form id='form1' method='POST' action='".base_url().index_page()."/admin/modificarAsesor'".">";
+                  echo "<form id='form1' method='POST' action='".base_url().index_page()."/adminPanel/configuracion/modificarAsesor'".">";
                     echo "<input style='visibility:hidden;display:none;' type='text' id='user_id' name='user_id' placeholder='id...'' value='".$asesores[$i]['id']."' required='true'>";
 
                     echo "<label for='user_nom'>Nombres:</label>";

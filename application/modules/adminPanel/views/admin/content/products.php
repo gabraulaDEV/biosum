@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <h2>Agregar producto</h2>
             <hr/>
             <div class="div_form">
-              <form id="formRegister" method="POST" action=<?php echo base_url().index_page()."/admin/agregarProducto ";?> enctype="multipart/form-data">
+              <form id="formRegister" method="POST" action=<?php echo base_url().index_page()."/adminPanel/productos/agregarProducto ";?> enctype="multipart/form-data">
                 <label for="itFullName">Seleccionar imagen</label>
                 <input type="file" name="file_image" required="true">
 
@@ -98,7 +98,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </form>
               <h2 style="margin-top: 50px;">Importar archivo</h2>
               <hr/>
-              <form id="formRegister" method="POST" action=<?php echo base_url().index_page()."/admin/import ";?> enctype="multipart/form-data">
+              <form id="formRegister" method="POST" action=<?php echo base_url().index_page()."/adminPanel/productos/import ";?> enctype="multipart/form-data">
                 <label for="itFullName">Seleccionar archivo Excel</label>
                 <input type="file" name="file" required="true">
 
@@ -161,7 +161,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             echo "<td>".$listado_productos[$i]['tipo_producto']."</td>";
                             echo "<td>".$listado_productos[$i]['prod_descripcion']."</td>";
                         ?>
-                            <td><button  onclick="location.href='./editProduct?prod_id=<?php echo $listado_productos[$i]['id']; ?> ';" class='templatemo-blue-button width-100' >Editar</button>
+                            <td><button  onclick="location.href='./productos/editProduct?prod_id=<?php echo $listado_productos[$i]['id']; ?> ';" class='templatemo-blue-button width-100' >Editar</button>
                             <hr>
                               <input type='submit' class='templatemo-blue-button width-100' value='Vista rápida' />
 

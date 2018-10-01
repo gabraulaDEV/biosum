@@ -89,7 +89,10 @@ class UsuarioDAO extends CI_Model{
 		}
 	}
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	public function cargarUsuarios($pagina,$rowsPerPage){
 		$query = "SELECT * FROM gb_usuario ORDER BY id asc LIMIT ? OFFSET ? ";
 		$resultSet = $this->db->query($query,array($rowsPerPage, ($pagina - 1) * $rowsPerPage));
@@ -100,9 +103,14 @@ class UsuarioDAO extends CI_Model{
 		$query = "SELECT COUNT(*) as resultadoConteo FROM gb_usuario";
 		$resultSet = $this->db->query($query);
 		return $resultSet->row()->resultadoConteo;
+<<<<<<< Updated upstream
 	}
 
 	public function update1($nom,$ape,$mail,$tel,$id)
+=======
+
+	function update1($nom,$ape,$mail,$tel,$id)
+>>>>>>> Stashed changes
 	{
 		$success=false;
 		$query="UPDATE gb_usuario SET usuario_nombre=?, usuario_apellido=?, usuario_email=?, usuario_telefono=? WHERE id=?";
@@ -119,6 +127,7 @@ class UsuarioDAO extends CI_Model{
 		}
 		return $success;
 
+<<<<<<< Updated upstream
 	}
 
 	public function getUserByEmail($email)
@@ -141,7 +150,10 @@ class UsuarioDAO extends CI_Model{
 
 		}
 		return $admin;
+=======
+>>>>>>> Stashed changes
 	}
 
+}
 }
 ?>

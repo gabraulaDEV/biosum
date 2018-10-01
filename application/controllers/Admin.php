@@ -122,6 +122,15 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	public function editProduct()
+	{
+		if($this->isSession()){
+			$params["active"]="prod";
+			$this->load->view('admin/template/header');
+			$this->load->view('admin/template/sidenav',$params);
+			$this->load->view('admin/content/editProduct');
+		}
+	}
 	public function agregarProducto()
 	{
 		if($this->isSession())
@@ -195,6 +204,7 @@ class Admin extends CI_Controller {
 
 		return $this->ProductoDAO->paginacionCargarProductos();
 	}
+<<<<<<< Updated upstream
 
 	public function editProduct()
 	{
@@ -241,6 +251,8 @@ class Admin extends CI_Controller {
 		}
 	}
 
+=======
+>>>>>>> Stashed changes
 	/***
 	*
 	* MANEJO DE OFERTAS
@@ -248,6 +260,10 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 	public function offers()
 	{
@@ -278,6 +294,14 @@ class Admin extends CI_Controller {
 		}
 		
 	} 
+<<<<<<< Updated upstream
+=======
+
+	/**
+	* USUARIO
+	*/
+
+>>>>>>> Stashed changes
 	/***
 	*
 	* MANEJO DE USUARIOS
@@ -285,6 +309,11 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 	public function users()
 	{
 			if($this->isSession()){
@@ -298,7 +327,6 @@ class Admin extends CI_Controller {
 			$this->load->view('admin/template/header');
 			$this->load->view('admin/template/sidenav',$params);
 			$this->load->view('admin/content/users');
-			$this->load->view('admin/content/users_clients');
 		}
 		
 	} 
@@ -359,9 +387,14 @@ class Admin extends CI_Controller {
 			//redirect(base_url().index_page()."/admin/admins",'refresh');
 			//header('Location:'.base_url().index_page().'/admin/admins');
 		}
-
 	}
 
+
+<<<<<<< Updated upstream
+	}
+
+=======
+>>>>>>> Stashed changes
 	public function cargarUsuarios($pageCount, $rowsPerPage){
 		return $resultado = $this->UsuarioDAO->cargarUsuarios($pageCount, $rowsPerPage);
 	}
@@ -371,6 +404,12 @@ class Admin extends CI_Controller {
 	}
 
 
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
 	/***
 	*
 	* CONFIGURACION CUENTA Y CONTACTO
@@ -378,6 +417,10 @@ class Admin extends CI_Controller {
 	*
 	*
 	*****/
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	public function config()
 	{
 			if($this->isSession()){

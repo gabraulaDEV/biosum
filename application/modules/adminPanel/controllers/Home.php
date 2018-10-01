@@ -39,5 +39,14 @@ class Home extends CI_Controller {
 		return $session;
 	}
 
+	public function logout()
+	{
+		/*Vaciar sessionid*/
+		$this->session->unset_userdata('sessionid');
+		/*Redireccionar a login*/
+		$this->load->view('admin/content/login');
+		
+	}
+
 }
 ?>

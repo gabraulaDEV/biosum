@@ -164,6 +164,51 @@ class Productos extends CI_Controller {
 		}
 	}
 
+	public function editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto)
+	{
+		$this->ProductoDAO->editProductUPDATE($prod_id,$referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto);
+	}
+
+	public function import()
+	{
+		if($this->isSession())
+		{
+			$alert="";
+			$this->load->library("excelreader/excel");
+			if($_FILES['file']['type']=="application/vnd.ms-excel")
+			{
+				$rta=$this->excel->importProductsXLS($_FILES['file']['tmp_name']);
+				if($rta[0])
+				{
+					$alert=$this->alertSuccess($rta[1]);
+				}
+				else
+				{
+					$alert=$this->alertError($rta[1]);
+				}
+			}
+			else if($_FILES['file']['type']=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+			{
+				$rta=$this->excel->importProductsXLSX($_FILES['file']['tmp_name']);
+				if($rta[0])
+				{
+					$alert=$this->alertSuccess($rta[1]);
+				}
+				else
+				{
+					$alert=$this->alertError($rta[1]);
+				}
+			}
+			else
+			{
+				$alert=$this->alertError("Archivo no válido, parece que no es un Excel");
+			}
+			$this->products();
+			echo $alert;
+
+		}
+	}
+
 
 	private function isSession(){
 		$session = false;
@@ -174,6 +219,26 @@ class Productos extends CI_Controller {
 		}
 
 		return $session;
+	}
+
+		private function alertError($msg)
+	{
+		$alert="";
+		$alert=$alert."<div id='alert1' onClick='exit()' class='alert_error'><b>".$msg."</b></div>";
+		$alert=$alert."<script>";
+		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";		
+		$alert=$alert."</script>";
+		return $alert;
+	}
+
+	private function alertSuccess($msg)
+	{
+		$alert="";
+		$alert=$alert."<div id='alert1' onClick='exit()' class='alert_success'><b>".$msg."</b></div>";
+		$alert=$alert."<script>";
+		$alert=$alert."function exit(){document.getElementById('alert1').style.display='none';document.getElementById('alert1').style.visibility='hidden';}";
+		$alert=$alert."</script>";
+		return $alert;
 	}
 
 }

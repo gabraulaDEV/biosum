@@ -7,4 +7,12 @@
           return base_url().'assets/';
        }
      }
+
+     if ( ! function_exists('asset_url_home()'))
+     {
+       function asset_url_home()
+       {
+          return base_url().'/assets/user/';
+       }
+     }
   ?>

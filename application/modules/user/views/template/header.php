@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gsbraula shop</title>
+    <title>Biosuministros</title>
     <link rel="shortcut icon" type="image/x-icon" href=<?php echo base_url()."assets/images/icon.ico"; ?> />
     <link rel="stylesheet" href=<?php echo base_url()."assets/user/css/components.css";?>>
     <link rel="stylesheet" href="<?php echo asset_url_home();?>/css/icons.css">
@@ -56,9 +56,9 @@
           <div class="top-nav s-12 l-10">
             <p class="nav-text"></p>
             <ul class="right chevron">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="products.html">Products</a></li>
-              <li><a>Services</a>
+              <li><a href="<?php echo base_url();?>index.php/user/index">Inicio</a></li>
+              <li><a href="<?php echo base_url();?>index.php/user/products">Productos</a></li>
+             <!-- <li><a>Services</a>
                 <ul>
                   <li><a>Service 1</a>
                     <ul>
@@ -68,10 +68,8 @@
                   </li>
                   <li><a>Service 2</a></li>
                 </ul>
-              </li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="gallery.html">Gallery</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              </li> -->
+              <li><a href="about.php">Acerca</a></li>
             </ul>
           </div>
         </div>

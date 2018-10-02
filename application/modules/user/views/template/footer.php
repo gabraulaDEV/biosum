@@ -114,8 +114,8 @@
         </div>
       </section>
     </footer> 
-    <script type="text/javascript" src="<?php echo asset_url();?>/js/responsee.js"></script>
-    <script type="text/javascript" src="<?php echo asset_url();?>/owl-carousel/owl.carousel.js"></script>
-    <script type="text/javascript" src="<?php echo asset_url();?>/js/template-scripts.js"></script>   
+    <script type="text/javascript" src="<?php echo asset_url();?>user/js/responsee.js"></script>
+    <script type="text/javascript" src="<?php echo asset_url();?>user/owl-carousel/owl.carousel.js"></script>
+    <script type="text/javascript" src="<?php echo asset_url();?>user/js/template-scripts.js"></script>   
    </body>
 </html>

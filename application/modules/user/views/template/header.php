@@ -23,7 +23,7 @@
   
   <body class="size-1140">
   	<!-- PREMIUM FEATURES BUTTON -->
-  	<a target="_blank" class="hide-s" href="../template/prospera-premium-responsive-business-template/" style="position:fixed;top:120px;right:-14px;z-index:10;"><img src="<?php echo asset_url_home();?>/img/premium-features.png" alt=""></a>
+  	<a target="_blank" class="hide-s" href="https://api.whatsapp.com/send?phone=15551234567" style="position:fixed;top:120px;right:-5px;z-index:10; width: 50px;"><img src="<?php echo asset_url_home();?>/img/ws.png" alt="Whatsapp" style="border-top-left-radius:30px;border-bottom-left-radius:30px;"></a>
     <!-- HEADER -->
     <header role="banner">    
       <!-- Top Bar -->
@@ -31,10 +31,10 @@
         <div class="line">
           <div class="s-12 m-6 l-6">
             <div class="top-bar-contact">
-              <p class="text-size-12">Contact Us: 0800 200 200 | <a class="text-orange-hover" href="mailto:contact@sampledomain.com">contact@sampledomain.com</a></p>
             </div>
           </div>
           <div class="s-12 m-6 l-6">
+            <!--
             <div class="right">
               <ul class="top-bar-social right">
                 <li><a href="/"><i class="icon-facebook_circle text-orange-hover"></i></a></li>
@@ -43,6 +43,7 @@
                 <li><a href="/"><i class="icon-instagram_circle text-orange-hover"></i></a></li>
               </ul>
             </div>
+            -->
           </div>
         </div>
       </div>
@@ -51,7 +52,7 @@
       <nav class="background-white background-primary-hightlight">
         <div class="line">
           <div class="s-12 l-2">
-            <a href="index.html" class="logo"><img src="<?php echo asset_url();?>images/logo.png" alt=""></a>
+            <a href="#" class="logo"><img src="<?php echo asset_url();?>images/logo.png" alt=""></a>
           </div>
           <div class="top-nav s-12 l-10">
             <p class="nav-text"></p>
@@ -69,7 +70,7 @@
                   <li><a>Service 2</a></li>
                 </ul>
               </li> -->
-              <li><a href="about.php">Acerca</a></li>
+              <li><a href="#contactoAsesor">Contacto</a></li>
             </ul>
           </div>
         </div>

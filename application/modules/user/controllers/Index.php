@@ -16,10 +16,14 @@ class Index extends CI_Controller {
 
 	public function index()
 	{			
+		$destacados=$this->ProductoDAO->darDestacados();
+		$params['destacados']=$destacados;
 		$this->load->view('template/header');
-		$this->load->view('content/home');
+		$this->load->view('content/home',$params);
 		$this->load->view('template/footer');
 	}
+
+
 
 	/**
 	* Registro de usuarios sólo con fin de prueba

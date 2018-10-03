@@ -100,5 +100,15 @@ class ProductoDAO extends CI_Model
 		$sql = "UPDATE gb_producto 	SET prod_referencia = ? , prod_modelo = ? , prod_descripcion = ? , prod_estado = ? , tipo_producto = ? , cod_cat = ?, precio = ? WHERE id = ?";
 		$resultSet=$this->db->query($sql,array($referencia_producto,$modelo_producto,$descripcion_producto,$estado_producto,$tipo_producto,$categoria_producto,$precio_producto,$prod_id));
 	}
+
+	public function darDestacados()
+	{
+		$query="SELECT gb_producto.image_url AS image,gb_producto.prod_referencia AS ref,gb_producto.prod_modelo AS model,gb_producto.precio AS precio,
+			gb_producto.prod_descripcion AS descr,gb_color.nom_color AS color,gb_categoria.nom_categoria AS cat FROM gb_producto,gb_color,gb_color_prod,gb_categoria
+				WHERE gb_color_prod.cod_producto=gb_producto.id AND gb_color_prod.cod_color=gb_color.cod_color AND gb_producto.cod_cat=gb_categoria.id AND gb_producto.tipo_producto='GENERICO' LIMIT 4";
+
+		$resultset = $this->db->query($query);
+		return $resultset->result_array();
+	}
 }
 ?>

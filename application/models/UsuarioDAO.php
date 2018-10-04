@@ -90,7 +90,10 @@ class UsuarioDAO extends CI_Model{
 	}
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 	public function cargarUsuarios($pagina,$rowsPerPage){
@@ -104,10 +107,13 @@ class UsuarioDAO extends CI_Model{
 		$resultSet = $this->db->query($query);
 		return $resultSet->row()->resultadoConteo;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	}
 
 	public function update1($nom,$ape,$mail,$tel,$id)
 =======
+=======
+>>>>>>> Stashed changes
 
 	function update1($nom,$ape,$mail,$tel,$id)
 >>>>>>> Stashed changes
@@ -127,6 +133,7 @@ class UsuarioDAO extends CI_Model{
 		}
 		return $success;
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 	}
 
@@ -152,8 +159,11 @@ class UsuarioDAO extends CI_Model{
 		return $admin;
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 	}
 
+}
 }
 }
 ?>

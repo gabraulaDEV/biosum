@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Products extends CI_Controller {
+class ViewProduct extends CI_Controller {
 
 	public function __construct()
 	{
@@ -17,17 +17,11 @@ class Products extends CI_Controller {
 	public function index()
 	{			
 		$this->load->view('template/header');
-	    $params['destacados'] = $this->darDestacados();
-		$this->load->view('content/products',$params);
+		$this->load->view('content/viewProduct');
 		$this->load->view('template/footer');
 	}
 
-	/**
-	* MÉTODO SOLO POR DEMOSRTACIÓN
-	*/
-	public function darDestacados(){
-		return $this->ProductoDAO->darDestacados();
-	}
+	
 	
 }
 ?>
